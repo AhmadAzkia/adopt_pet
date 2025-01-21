@@ -25,12 +25,14 @@ export default function LoginForm() {
           <div className="flex flex-col items-center mb-8">
             <div>
               <Image
-                src={DataImage.kujing2 || "/placeholder.svg"}
+                src={DataImage.kujing3 || "/placeholder.svg"}
                 alt="Logo"
                 priority={true}
-                className="mb-4 transform hover:scale-105 transition-transform duration-300"
+                width={150}
+                className="mb-6 transform hover:scale-105 transition-transform duration-300"
               />
             </div>
+            <h1 className="text-3xl font-semibold text-gray-800 mb-3">Adopt Pet</h1>
             <p className="text-gray-600 text-center">
               Silahkan Login untuk masuk ke aplikasi.
             </p>
@@ -88,7 +90,7 @@ export default function LoginForm() {
 
             <button
               type="submit"
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl hover:from-blue-800 hover:to-blue-700 transition-all duration-300 shadow-lg shadow-blue-900/20"
+              className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20"
             >
               Masuk
             </button>

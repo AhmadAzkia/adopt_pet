@@ -25,10 +25,11 @@ export default function LoginForm() {
           <div className="flex flex-col items-center mb-8">
             <div>
               <Image
-                src={DataImage.kujing2 || "/placeholder.svg"}
+                src={DataImage.kujing3 || "/placeholder.svg"}
                 alt="Logo"
                 priority={true}
-                className="mb-4 transform hover:scale-105 transition-transform duration-300"
+                width={250}
+                className="mb-6 transform hover:scale-105 transition-transform duration-300"
               />
             </div>
             <p className="text-gray-600 text-center">

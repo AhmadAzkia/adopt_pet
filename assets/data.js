@@ -6,6 +6,7 @@ import Hero3 from "@/assets/images/kidspet.jpg";
 import cadog from "@/assets/images/catanddog.jpg";
 import kujing from "@/assets/images/kujing.png";
 import kujing2 from "@/assets/images/kujing2.png";
+import kujing3 from "@/assets/images/kujing3.png";
 
 const Image = {
   Cat,
@@ -16,7 +17,7 @@ const Image = {
   cadog,
   kujing,
   kujing2,
-  
+  kujing3,
 };
 
 export default Image;

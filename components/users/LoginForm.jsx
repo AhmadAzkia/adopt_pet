@@ -37,7 +37,7 @@ export default function LoginForm() {
             </div>
 
             <p className="text-gray-600 text-center">
-              Silahkan Login untuk masuk ke aplikasi.
+              Silahkan Login untuk Login ke aplikasi.
             </p>
           </div>
 
@@ -54,7 +54,7 @@ export default function LoginForm() {
                 id="identifier"
                 name="identifier"
                 autoComplete="username"
-                placeholder="Masukkan Email atau Username..."
+                placeholder="Loginkan Email atau Username..."
                 value={formData.identifier}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-700 focus:ring focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 bg-white/50 backdrop-blur-sm"
@@ -74,7 +74,7 @@ export default function LoginForm() {
                 id="password"
                 name="password"
                 autoComplete="current-password"
-                placeholder="Masukkan Password..."
+                placeholder="Loginkan Password..."
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-700 focus:ring focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 bg-white/50 backdrop-blur-sm"
@@ -95,7 +95,7 @@ export default function LoginForm() {
               type="submit"
               className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20"
             >
-              Masuk
+              Login
             </button>
           </form>
 

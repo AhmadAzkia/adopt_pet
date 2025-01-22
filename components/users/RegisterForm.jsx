@@ -37,7 +37,7 @@ export default function RegisterForm() {
               </h1>
             </div>
             <p className="text-gray-600 text-center">
-              Silahkan Daftar untuk masuk ke aplikasi.
+              Silahkan Register untuk masuk ke aplikasi.
             </p>
           </div>
 
@@ -122,7 +122,7 @@ export default function RegisterForm() {
               type="submit"
               className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20"
             >
-              Daftar
+              Register
             </button>
           </form>
 

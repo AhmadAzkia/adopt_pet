@@ -17,23 +17,36 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-gradient-to-br from-gray-200 via-gray-100 to-white">
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-100 opacity-5" />
+    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-[#ECF7FB]">
+      <div className="absolute inset-0  opacity-5" />
 
       <div className="w-full max-w-md">
         <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-300">
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-center">
-              <Image src={DataImage.kujing3 || "/placeholder.svg"} alt="Logo" priority={true} width={140} className="mb-6 transform hover:scale-105 transition-transform duration-300" />
-              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r text-transparent from-blue-600 to-blue-700 bg-clip-text">Adopt Pet</h1>
+              <Image
+                src={DataImage.kujing3 || "/placeholder.svg"}
+                alt="Logo"
+                priority={true}
+                width={140}
+                className="mb-6 transform hover:scale-105 transition-transform duration-300"
+              />
+              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r text-transparent from-blue-600 to-blue-700 bg-clip-text">
+                Adopt Pet
+              </h1>
             </div>
 
-            <p className="text-gray-600 text-center">Silahkan Login untuk masuk ke aplikasi.</p>
+            <p className="text-gray-600 text-center">
+              Silahkan Login untuk masuk ke aplikasi.
+            </p>
           </div>
 
           <form className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="identifier" className="block font-medium text-gray-700">
+              <label
+                htmlFor="identifier"
+                className="block font-medium text-gray-700"
+              >
                 Email atau Username
               </label>
               <input
@@ -50,7 +63,10 @@ export default function LoginForm() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="password" className="block font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block font-medium text-gray-700"
+              >
                 Password
               </label>
               <input
@@ -67,19 +83,28 @@ export default function LoginForm() {
             </div>
 
             <div className="flex justify-end">
-              <Link href="/forgot-password" className="text-sm text-blue-800 hover:text-blue-900 transition-colors duration-300">
+              <Link
+                href="/forgot-password"
+                className="text-sm text-blue-800 hover:text-blue-900 transition-colors duration-300"
+              >
                 Lupa Password?
               </Link>
             </div>
 
-            <button type="submit" className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20">
+            <button
+              type="submit"
+              className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20"
+            >
               Masuk
             </button>
           </form>
 
           <p className="mt-6 text-center text-gray-600">
             Belum punya akun?{" "}
-            <Link href="/register" className="font-semibold text-blue-900 hover:text-blue-800 transition-colors duration-300">
+            <Link
+              href="/register"
+              className="font-semibold text-blue-900 hover:text-blue-800 transition-colors duration-300"
+            >
               Register
             </Link>
           </p>

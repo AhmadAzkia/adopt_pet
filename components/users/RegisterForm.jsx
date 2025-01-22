@@ -24,29 +24,16 @@ export default function RegisterForm() {
       <div className="w-full max-w-md">
         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-blue-100">
           <div className="flex flex-col items-center mb-8">
-            <div>
-              <Image
-                src={DataImage.kujing3}
-                alt="Logo"
-                priority={true}
-                width={150}
-                className="mb-4 transform hover:scale-105 transition-transform duration-300"
-              />
+            <div className="flex items-center">
+              <Image src={DataImage.kujing3 || "/placeholder.svg"} alt="Logo" priority={true} width={140} className="mb-6 transform hover:scale-105 transition-transform duration-300" />
+              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r text-transparent from-blue-600 to-blue-700 bg-clip-text">Adopt Pet</h1>
             </div>
-            <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-900 to-blue-800 bg-clip-text text-transparent">
-              Adopt Pet
-            </h1>
-            <p className="text-gray-600 text-center">
-              Silahkan Daftar untuk masuk ke aplikasi.
-            </p>
+            <p className="text-gray-600 text-center">Silahkan Daftar untuk masuk ke aplikasi.</p>
           </div>
 
           <form className="space-y-6">
             <div className="space-y-2">
-              <label
-                htmlFor="username"
-                className="block font-medium text-gray-700"
-              >
+              <label htmlFor="username" className="block font-medium text-gray-700">
                 Username
               </label>
               <input
@@ -63,10 +50,7 @@ export default function RegisterForm() {
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="block font-medium text-gray-700"
-              >
+              <label htmlFor="email" className="block font-medium text-gray-700">
                 Email
               </label>
               <input
@@ -83,10 +67,7 @@ export default function RegisterForm() {
             </div>
 
             <div className="space-y-2">
-              <label
-                htmlFor="password"
-                className="block font-medium text-gray-700"
-              >
+              <label htmlFor="password" className="block font-medium text-gray-700">
                 Password
               </label>
               <input
@@ -118,20 +99,14 @@ export default function RegisterForm() {
               </select>
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-3 px-6 bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl hover:from-blue-800 hover:to-blue-700 transition-all duration-300 shadow-lg shadow-blue-900/20"
-            >
+            <button type="submit" className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20">
               Daftar
             </button>
           </form>
 
           <p className="mt-6 text-center text-gray-600">
             Sudah punya akun?{" "}
-            <Link
-              href="/login"
-              className="font-semibold text-blue-900 hover:text-blue-800 transition-colors duration-300"
-            >
+            <Link href="/login" className="font-semibold text-blue-900 hover:text-blue-800 transition-colors duration-300">
               Login
             </Link>
           </p>

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next/font": "^14.2.15",
     "@react-google-maps/api": "^2.20.5",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",

@@ -18,7 +18,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-gradient-to-br from-amber-50 via-blue-50 to-white">
+    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-gradient-to-br from-gray-200 via-gray-100 to-white">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-amber-100 opacity-5" />
 
       <div className="w-full max-w-md">

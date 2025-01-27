@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import DataImage from "@/assets/data";
 import Image from "next/image";
 import Link from "next/link";
+import Swal from "sweetalert2";
 
 export default function RegisterForm() {
+  const router = useRouter(); // Inisialisasi router
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -14,12 +17,45 @@ export default function RegisterForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          title: "Registrasi Berhasil!",
+          text: "Silakan login untuk melanjutkan.",
+          icon: "success",
+          confirmButtonText: "Login",
+        }).then(() => router.push("/login"));
+      } else {
+        const data = await response.json();
+        Swal.fire(
+          "Registrasi Gagal",
+          data.error || "Terjadi kesalahan.",
+          "error"
+        );
+      }
+    } catch (error) {
+      Swal.fire(
+        "Error",
+        "Terjadi kesalahan pada server. Silakan coba lagi.",
+        "error"
+      );
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-gradient-to-br bg-[#ECF7FB]">
-      <div className="absolute inset-0  opacity-5" />
+      <div className="absolute inset-0 opacity-5" />
 
       <div className="w-full max-w-md">
         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-blue-100">
@@ -30,6 +66,7 @@ export default function RegisterForm() {
                 alt="Logo"
                 priority={true}
                 width={140}
+                height={140}
                 className="mb-6 transform hover:scale-105 transition-transform duration-300"
               />
               <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r text-transparent from-blue-600 to-blue-700 bg-clip-text">
@@ -41,7 +78,7 @@ export default function RegisterForm() {
             </p>
           </div>
 
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label
                 htmlFor="username"

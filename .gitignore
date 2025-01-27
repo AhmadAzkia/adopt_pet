@@ -12,6 +12,7 @@
 
 
 .env.local
+.env
 
 # testing
 /coverage

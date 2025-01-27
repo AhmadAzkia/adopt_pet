@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Swal from "sweetalert2";
 import DataImage from "@/assets/data";
 import { User, LogOut, Menu, X } from "lucide-react";
 
@@ -39,9 +40,25 @@ export default function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    updateUserFromToken(); // Reset state
-    window.location.href = "/";
+    Swal.fire({
+      title: "Konfirmasi Logout",
+      text: "Apakah Anda yakin ingin logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Logout",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("token");
+        Swal.fire({
+          title: "Logout Berhasil",
+          text: "Anda telah berhasil logout.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        window.location.href = "/";
+      }
+    });
   };
 
   return (

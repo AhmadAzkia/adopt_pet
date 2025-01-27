@@ -1,16 +1,39 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import Image from "next/image";
 import Link from "next/link";
 import DataImage from "@/assets/data";
 import { Heart, MapPin, DoorOpen, PawPrintIcon as Paw } from "lucide-react";
 
 export default function Home() {
+  const [role, setRole] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        setRole(payload.role);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+  }, []);
+
   const handleOpenAdopsiClick = () => {
-    alert(
-      "Anda harus login terlebih dahulu untuk mengakses halaman Open Adopsi."
-    );
-    window.location.href = "/login"; // Redirect ke halaman login
+    Swal.fire({
+      title: "Akses Terbatas",
+      text: "Anda harus login terlebih dahulu sebagai pemilik untuk mengakses halaman Open Adopsi.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Login",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/login";
+      }
+    });
   };
 
   return (
@@ -44,12 +67,14 @@ export default function Home() {
                 >
                   Lihat Daftar Pet
                 </Link>
-                <button
-                  onClick={handleOpenAdopsiClick}
-                  className="px-6 py-3 border-2 border-blue-900 text-blue-900 rounded-xl hover:bg-blue-900 hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-900/20"
-                >
-                  Open Adopsi
-                </button>
+                {!role && (
+                  <button
+                    onClick={handleOpenAdopsiClick}
+                    className="px-6 py-3 border-2 border-blue-900 text-blue-900 rounded-xl hover:bg-blue-900 hover:text-white transform hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-900/20"
+                  >
+                    Open Adopsi
+                  </button>
+                )}
               </div>
             </div>
             <div className="relative">
@@ -186,4 +211,3 @@ export default function Home() {
     </>
   );
 }
-

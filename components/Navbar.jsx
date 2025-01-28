@@ -50,13 +50,18 @@ export default function Navbar() {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("token");
+
+        // Tampilkan alert logout berhasil
         Swal.fire({
           title: "Logout Berhasil",
           text: "Anda telah berhasil logout.",
           icon: "success",
           confirmButtonText: "OK",
+        }).then((okResult) => {
+          if (okResult.isConfirmed) {
+            window.location.href = "/";
+          }
         });
-        window.location.href = "/";
       }
     });
   };

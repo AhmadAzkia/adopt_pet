@@ -20,7 +20,7 @@ export default function LoginForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await fetch("/api/login", {
@@ -70,6 +70,121 @@ export default function LoginForm() {
       );
     }
   };
+  const handleForgotPassword = async () => {
+    const { value: email } = await Swal.fire({
+      title: "Lupa Password?",
+      input: "email",
+      inputPlaceholder: "Masukkan email Anda...",
+      showCancelButton: true,
+      confirmButtonText: "Kirim OTP",
+      cancelButtonText: "Batal",
+      inputValidator: (value) => {
+        if (!value) {
+          return "Email tidak boleh kosong!";
+        }
+      },
+    });
+
+    if (email) {
+      try {
+        const response = await fetch("/api/auth/forgot-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          Swal.fire(
+            "Cek Email Anda",
+            "OTP telah dikirim ke email Anda.",
+            "success"
+          );
+
+          // Setelah OTP dikirim, buka popup input OTP
+          const { value: otp } = await Swal.fire({
+            title: "Masukkan OTP",
+            input: "text",
+            inputPlaceholder: "Masukkan OTP yang dikirim ke email...",
+            showCancelButton: true,
+            confirmButtonText: "Verifikasi OTP",
+            cancelButtonText: "Batal",
+            inputValidator: (value) => {
+              if (!value) {
+                return "OTP tidak boleh kosong!";
+              }
+            },
+          });
+
+          if (otp) {
+            const otpResponse = await fetch("/api/otp/verify-otp", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, otp }),
+            });
+
+            const otpData = await otpResponse.json();
+
+            if (otpResponse.ok) {
+              Swal.fire(
+                "OTP Valid",
+                "Silakan masukkan password baru Anda.",
+                "success"
+              );
+
+              // Setelah OTP valid, buka popup untuk masukkan password baru
+              const { value: newPassword } = await Swal.fire({
+                title: "Reset Password",
+                input: "password",
+                inputPlaceholder: "Masukkan password baru...",
+                showCancelButton: true,
+                confirmButtonText: "Simpan Password",
+                cancelButtonText: "Batal",
+                inputValidator: (value) => {
+                  if (!value) {
+                    return "Password tidak boleh kosong!";
+                  }
+                },
+              });
+
+              if (newPassword) {
+                const resetResponse = await fetch("/api/auth/reset-password", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email, password: newPassword }),
+                });
+
+                const resetData = await resetResponse.json();
+
+                if (resetResponse.ok) {
+                  Swal.fire(
+                    "Sukses",
+                    "Password Anda telah diperbarui!",
+                    "success"
+                  ).then(() => {
+                    router.push("/login"); // Arahkan ke halaman login setelah reset password
+                  });
+                } else {
+                  Swal.fire(
+                    "Gagal",
+                    resetData.error || "Terjadi kesalahan.",
+                    "error"
+                  );
+                }
+              }
+            } else {
+              Swal.fire("Gagal", otpData.error || "OTP tidak valid.", "error");
+            }
+          }
+        } else {
+          Swal.fire("Gagal", data.error || "Terjadi kesalahan.", "error");
+        }
+      } catch (error) {
+        Swal.fire("Error", "Terjadi kesalahan pada server.", "error");
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-[#ECF7FB]">
@@ -95,20 +210,18 @@ export default function LoginForm() {
             <p className="text-red-600 text-center mb-4">{errorMessage}</p>
           )}
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div className="space-y-2">
               <label
                 htmlFor="identifier"
                 className="block font-medium text-gray-700"
-              >
-                Email atau Username
-              </label>
+              ></label>
               <input
                 type="text"
                 id="identifier"
                 name="identifier"
                 autoComplete="username"
-                placeholder="Loginkan Email atau Username..."
+                placeholder="Masukkan Email atau Username..."
                 value={formData.identifier}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-700 focus:ring focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 bg-white/50 backdrop-blur-sm"
@@ -120,15 +233,13 @@ export default function LoginForm() {
               <label
                 htmlFor="password"
                 className="block font-medium text-gray-700"
-              >
-                Password
-              </label>
+              ></label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 autoComplete="current-password"
-                placeholder="Loginkan Password..."
+                placeholder="Masukkan Password..."
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-700 focus:ring focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 bg-white/50 backdrop-blur-sm"
@@ -143,6 +254,15 @@ export default function LoginForm() {
               Login
             </button>
           </form>
+
+          <p className="mt-4 text-center text-gray-600">
+            <button
+              onClick={handleForgotPassword}
+              className="text-blue-900 hover:text-blue-800"
+            >
+              Lupa Password?
+            </button>
+          </p>
 
           <p className="mt-6 text-center text-gray-600">
             Belum punya akun?{" "}

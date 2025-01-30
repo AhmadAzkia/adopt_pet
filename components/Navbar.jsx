@@ -9,7 +9,7 @@ import { User, LogOut, Menu, X } from "lucide-react";
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
-  const [role, setRole] = useState(null); // Tambahkan state untuk role pengguna
+  const [role, setRole] = useState(""); // Tambahkan state untuk role pengguna
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 

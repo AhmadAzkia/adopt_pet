@@ -40,6 +40,7 @@ export default function LoginForm() {
 
         // Decode token JWT
         const payload = JSON.parse(atob(token.split(".")[1]));
+        localStorage.setItem("owner_id", payload.id); // Simpan owner_id di LocalStorage
 
         // SweetAlert2 notification
         Swal.fire({

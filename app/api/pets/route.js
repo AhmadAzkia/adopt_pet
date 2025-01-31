@@ -48,7 +48,9 @@ export async function POST(req) {
     const gender = formData.get("gender");
     const location = formData.get("location");
     const description = formData.get("description");
-    const owner_id = formData.get("owner_id"); // Ambil owner_id dari request
+    const owner_id = formData.get("owner_id");
+    const latitude = formData.get("latitude");
+    const longitude = formData.get("longitude");
 
     if (!owner_id) {
       return NextResponse.json(
@@ -110,28 +112,6 @@ export async function POST(req) {
       }
     }
 
-    // ✅ DAPATKAN KOORDINAT LOKASI DARI GOOGLE MAPS API
-    let latitude = null;
-    let longitude = null;
-
-    if (location) {
-      try {
-        const address = encodeURIComponent(location);
-        const mapResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
-        );
-        const mapData = await mapResponse.json();
-
-        if (mapData.status === "OK" && mapData.results.length > 0) {
-          const { lat, lng } = mapData.results[0].geometry.location;
-          latitude = lat;
-          longitude = lng;
-        }
-      } catch (geoError) {
-        console.error("Error mendapatkan koordinat:", geoError);
-      }
-    }
-
     // ✅ SIMPAN DATA PET KE DATABASE
     try {
       const connection = await pool.getConnection();
@@ -173,63 +153,6 @@ export async function POST(req) {
     console.error("Error adding pet:", error);
     return NextResponse.json(
       { success: false, message: "Terjadi kesalahan di server" },
-      { status: 500 }
-    );
-  }
-}
-
-// ✅ HANDLER PUT - Update data pet di database
-export async function PUT(req) {
-  try {
-    const { petId, adopted, ownerId } = await req.json();
-
-    if (!petId || ownerId === undefined) {
-      return NextResponse.json(
-        { success: false, message: "Pet ID atau Owner ID tidak ditemukan" },
-        { status: 400 }
-      );
-    }
-
-    const connection = await pool.getConnection();
-    try {
-      // Ambil status lama
-      const [oldData] = await connection.execute(
-        "SELECT adopted FROM pets WHERE id = ?",
-        [petId]
-      );
-
-      if (oldData.length === 0) {
-        return NextResponse.json(
-          { success: false, message: "Pet tidak ditemukan" },
-          { status: 404 }
-        );
-      }
-
-      const oldStatus = oldData[0].adopted;
-
-      // Update status di tabel pets
-      await connection.execute("UPDATE pets SET adopted = ? WHERE id = ?", [
-        adopted,
-        petId,
-      ]);
-
-      // Simpan riwayat ke adopt_log
-      await connection.execute(
-        "INSERT INTO adopt_log (pet_id, owner_id, status_before, status_after) VALUES (?, ?, ?, ?)",
-        [petId, ownerId, oldStatus, adopted]
-      );
-
-      return NextResponse.json({
-        success: true,
-        message: "Status adopsi berhasil diubah",
-      });
-    } finally {
-      connection.release();
-    }
-  } catch (error) {
-    console.error("Error updating pet status:", error);
-    return NextResponse.json(
-      { success: false, message: "Gagal mengubah status adopsi" },
       { status: 500 }
     );
   }

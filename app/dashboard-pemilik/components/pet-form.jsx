@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 
+// Add proper named export
 export function PetForm({ onSubmit, loading }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [petType, setPetType] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -71,6 +73,8 @@ export function PetForm({ onSubmit, loading }) {
               id="type"
               name="type"
               required
+              value={petType}
+              onChange={(e) => setPetType(e.target.value)}
               className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
             >
               <option value="">Pilih jenis hewan</option>
@@ -102,6 +106,8 @@ export function PetForm({ onSubmit, loading }) {
               type="number"
               id="age"
               name="age"
+              min="0"
+              step="1"
               className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
             />
           </div>

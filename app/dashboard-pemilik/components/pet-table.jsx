@@ -1,19 +1,43 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 
 export function PetTable({ pets, onDelete, onStatusChange }) {
+  // Move initial state to useEffect to avoid hydration mismatch
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState({
+    status: "all",
+    type: "all",
+  });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const filteredPets = pets.filter((pet) => {
     const matchesSearch =
       pet.name.toLowerCase().includes(search.toLowerCase()) ||
       pet.breed.toLowerCase().includes(search.toLowerCase());
-    const matchesFilter =
-      filter === "all" ||
-      (filter === "adopted" && pet.adopted === 1) ||
-      (filter === "available" && pet.adopted === 0);
-    return matchesSearch && matchesFilter;
+
+    const matchesStatus =
+      filter.status === "all" ||
+      (filter.status === "adopted" && pet.adopted === 1) ||
+      (filter.status === "available" && pet.adopted === 0);
+
+    const matchesType = filter.type === "all" || filter.type === pet.type;
+
+    return matchesSearch && matchesStatus && matchesType;
   });
+
+  // Don't render until client-side hydration is complete
+  if (!mounted) {
+    return null;
+  }
+
+  const getPetTypeLabel = (type) => {
+    return type === "cat" ? "Kucing" : "Anjing";
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-8">
@@ -41,15 +65,30 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
             />
           </svg>
         </div>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
-        >
-          <option value="all">Semua Status</option>
-          <option value="available">Tersedia</option>
-          <option value="adopted">Diadopsi</option>
-        </select>
+        <div className="flex gap-4">
+          <select
+            value={filter.type}
+            onChange={(e) =>
+              setFilter((prev) => ({ ...prev, type: e.target.value }))
+            }
+            className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+          >
+            <option value="all">Semua Jenis</option>
+            <option value="cat">Kucing</option>
+            <option value="dog">Anjing</option>
+          </select>
+          <select
+            value={filter.status}
+            onChange={(e) =>
+              setFilter((prev) => ({ ...prev, status: e.target.value }))
+            }
+            className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+          >
+            <option value="all">Semua Status</option>
+            <option value="available">Tersedia</option>
+            <option value="adopted">Diadopsi</option>
+          </select>
+        </div>
       </div>
 
       <div className="overflow-x-auto border-2 border-gray-200 rounded-xl">
@@ -61,6 +100,9 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
               </th>
               <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
                 Nama
+              </th>
+              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+                Jenis
               </th>
               <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
                 Ras
@@ -89,6 +131,11 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
                 <td className="px-8 py-5 whitespace-nowrap">
                   <div className="text-base font-medium text-gray-900">
                     {pet.name}
+                  </div>
+                </td>
+                <td className="px-8 py-5 whitespace-nowrap">
+                  <div className="text-base text-gray-500">
+                    {getPetTypeLabel(pet.type)}
                   </div>
                 </td>
                 <td className="px-8 py-5 whitespace-nowrap">

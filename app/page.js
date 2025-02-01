@@ -170,12 +170,12 @@ export default function Home() {
               {
                 image: DataImage.Cat,
                 name: "Kucing",
-                href: "/pet-list/cat",
+                href: "/pet-list/cats",
               },
               {
                 image: DataImage.Dog,
                 name: "Anjing",
-                href: "/pet-list/dog",
+                href: "/pet-list/dogs",
               },
             ].map((pet) => (
               <div

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import DataImage from "@/assets/data";
-import { User, LogOut, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -29,6 +29,12 @@ export default function Navbar() {
       setUsername(null);
       setRole(null);
     }
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   };
 
   useEffect(() => {

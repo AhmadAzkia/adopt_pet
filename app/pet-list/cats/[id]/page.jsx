@@ -1,19 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { MapView } from "@/components/pet-list/map-view";
 
-export default function CatDetail({ params }) {
+export default function CatDetail() {
   const [cat, setCat] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const params = useParams();
+  const { id } = params;
+  const router = useRouter();
+
+  const handleBack = () => {
+    router.back();
+  };
+
   useEffect(() => {
+    if (!id) return;
+
     const fetchCat = async () => {
       try {
-        const response = await fetch(`/api/pets/cats/${params.id}`);
+        const response = await fetch(`/api/pets/cats/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch cat details");
         }
@@ -31,20 +41,13 @@ export default function CatDetail({ params }) {
     };
 
     fetchCat();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
+      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
-          <div className="animate-pulse">
-            <div className="aspect-video bg-gray-200 rounded-xl mb-8" />
-            <div className="space-y-4">
-              <div className="h-8 bg-gray-200 rounded w-1/3" />
-              <div className="h-4 bg-gray-200 rounded w-2/3" />
-              <div className="h-4 bg-gray-200 rounded w-1/2" />
-            </div>
-          </div>
+          <p className="text-center text-gray-500">Memuat detail kucing...</p>
         </div>
       </div>
     );
@@ -52,7 +55,7 @@ export default function CatDetail({ params }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
+      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
           <p className="text-center text-red-500">{error}</p>
         </div>
@@ -62,7 +65,7 @@ export default function CatDetail({ params }) {
 
   if (!cat) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
+      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
           <p className="text-center text-gray-500">Kucing tidak ditemukan</p>
         </div>
@@ -70,17 +73,9 @@ export default function CatDetail({ params }) {
     );
   }
 
-  const center =
-    cat.latitude && cat.longitude
-      ? {
-          lat: Number.parseFloat(cat.latitude),
-          lng: Number.parseFloat(cat.longitude),
-        }
-      : undefined;
-
   return (
-    <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
+      <div className="max-w-4xl mx-auto flex flex-col space-y-6">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative aspect-video">
             <Image
@@ -109,12 +104,12 @@ export default function CatDetail({ params }) {
                   <p>Ras: {cat.breed}</p>
                   <p>Usia: {cat.age}</p>
                   <p>Jenis Kelamin: {cat.gender}</p>
+                  <p>Ukuran: {cat.size}</p>
                 </div>
               </div>
               <div>
                 <h2 className="text-lg font-semibold mb-2">Lokasi</h2>
-                <p className="text-gray-600 mb-4">{cat.location}</p>
-                <MapView pets={[cat]} center={center} />
+                <p className="text-gray-600">{cat.location}</p>
               </div>
             </div>
 
@@ -124,9 +119,20 @@ export default function CatDetail({ params }) {
                 <p className="text-gray-600">{cat.description}</p>
               </div>
             )}
+
+            {/* Back Button */}
+            <button
+              onClick={handleBack}
+              className="mt-6 px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+            >
+              Kembali
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Add some spacing at the bottom for the footer */}
+      <div className="pt-6 pb-6"></div>
     </div>
   );
 }

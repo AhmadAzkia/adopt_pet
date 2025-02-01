@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Swal from "sweetalert2";
 import {
   GoogleMap,
   LoadScript,
@@ -22,33 +23,76 @@ export function MapView({ pets }) {
   const [userLocation, setUserLocation] = useState(null);
   const [directions, setDirections] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [locationFetched, setLocationFetched] = useState(false); // State untuk memeriksa apakah lokasi pengguna sudah diambil
   const center = { lat: -6.9175, lng: 107.6191 }; // Bandung center
 
-  // Get user's location
-  const getUserLocation = useCallback(() => {
+  // Mendapatkan lokasi pengguna
+  const getUserLocation = useCallback(async (e) => {
+    e.preventDefault(); // Mencegah form submit dan refresh halaman
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
+      // Tampilkan loading saat mengambil lokasi
+      Swal.fire({
+        title: "Mengambil Lokasi Anda",
+        text: "Mohon tunggu sebentar...",
+        icon: "info",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
         },
-        (error) => {
-          console.error("Error getting location:", error);
-          alert("Tidak dapat mengakses lokasi Anda. Pastikan izin diberikan.");
-        }
-      );
+      });
+
+      // Menunggu lokasi pengguna dari geolocation API
+      try {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setUserLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+            setLocationFetched(true); // Lokasi berhasil diambil
+
+            // Menambahkan delay 1 detik sebelum menutup SweetAlert
+            setTimeout(() => {
+              Swal.close(); // Menutup SweetAlert setelah sedikit jeda
+            }, 1000); // Delay 1 detik
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+            Swal.close();
+            Swal.fire({
+              icon: "error",
+              title: "Lokasi Tidak Ditemukan",
+              text: "Mohon aktifkan lokasi Anda terlebih dahulu.",
+            });
+          }
+        );
+      } catch (err) {
+        console.error("Error getting location:", err);
+        Swal.close();
+        Swal.fire({
+          icon: "error",
+          title: "Geolocation Tidak Didukung",
+          text: "Browser Anda tidak mendukung geolocation.",
+        });
+      }
     } else {
-      alert("Geolocation tidak didukung oleh browser Anda.");
+      Swal.fire({
+        icon: "error",
+        title: "Geolocation Tidak Didukung",
+        text: "Browser Anda tidak mendukung geolocation.",
+      });
     }
   }, []);
 
-  // Calculate route when a pet is selected
+  // Menghitung rute saat memilih pet
   const calculateRoute = useCallback(
     async (pet) => {
       if (!userLocation) {
-        alert("Mohon aktifkan lokasi Anda terlebih dahulu");
+        Swal.fire({
+          icon: "warning",
+          title: "Aktifkan Lokasi",
+          text: "Mohon aktifkan lokasi Anda terlebih dahulu.",
+        });
         return;
       }
 
@@ -65,13 +109,17 @@ export function MapView({ pets }) {
         });
 
         setDirections(result);
-        // Get distance in kilometers
+        // Mendapatkan jarak dalam kilometer
         const distanceInMeters = result.routes[0].legs[0].distance.value;
         const distanceInKm = (distanceInMeters / 1000).toFixed(1);
         setDistance(distanceInKm);
       } catch (error) {
         console.error("Error calculating route:", error);
-        alert("Gagal menghitung rute");
+        Swal.fire({
+          icon: "error",
+          title: "Gagal Menghitung Rute",
+          text: "Terdapat kesalahan dalam menghitung rute.",
+        });
       }
     },
     [userLocation]
@@ -113,13 +161,13 @@ export function MapView({ pets }) {
             ],
           }}
         >
-          {/* User location marker */}
+          {/* Marker Lokasi Pengguna */}
           {userLocation && (
             <MarkerF
               position={userLocation}
               icon={{
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: 7,
+                scale: 10,
                 fillColor: "#4CAF50",
                 fillOpacity: 1,
                 strokeWeight: 2,
@@ -149,8 +197,8 @@ export function MapView({ pets }) {
             return null;
           })}
 
-          {/* Info window for selected pet */}
-          {selectedPet && (
+          {/* Info window untuk pet yang dipilih */}
+          {selectedPet && locationFetched && (
             <InfoWindowF
               position={{
                 lat: Number.parseFloat(selectedPet.latitude),
@@ -162,8 +210,8 @@ export function MapView({ pets }) {
                 setDistance(null);
               }}
             >
-              <div className="p-3 max-w-[200px]">
-                <div className="w-full h-32 relative mb-2">
+              <div className="p-3 max-w-[250px]">
+                <div className="w-full h-24 relative mb-2">
                   <img
                     src={selectedPet.image || "/placeholder.svg"}
                     alt={selectedPet.name}
@@ -202,7 +250,7 @@ export function MapView({ pets }) {
             </InfoWindowF>
           )}
 
-          {/* Show route if directions are available */}
+          {/* Tampilkan rute jika tersedia */}
           {directions && <DirectionsRenderer directions={directions} />}
         </GoogleMap>
       </div>

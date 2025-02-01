@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export function useCatList() {
   const [cats, setCats] = useState([]);
@@ -11,11 +11,7 @@ export function useCatList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchCats();
-  }, [search, filters]); //Fixed dependency
-
-  const fetchCats = async () => {
+  const fetchCats = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -38,7 +34,11 @@ export function useCatList() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [search, filters]); // `useCallback` mencegah fungsi berubah setiap render
+
+  useEffect(() => {
+    fetchCats();
+  }, [fetchCats]); // Sekarang aman untuk ditambahkan ke dalam dependency array
 
   return {
     cats,

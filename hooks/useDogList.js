@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export function useDogList() {
   const [dogs, setDogs] = useState([]);
@@ -11,11 +11,7 @@ export function useDogList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchDogs();
-  }, []); //Corrected dependency array
-
-  const fetchDogs = async () => {
+  const fetchDogs = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -38,7 +34,11 @@ export function useDogList() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters, search]); // Tambahkan dependencies
+
+  useEffect(() => {
+    fetchDogs();
+  }, [fetchDogs]); // Tambahkan fetchDogs sebagai dependency
 
   return {
     dogs,

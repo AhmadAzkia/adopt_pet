@@ -261,7 +261,7 @@ export default function LoginForm() {
               onClick={handleForgotPassword}
               className="text-primary hover:text-[#1F3D73]"
             >
-              Lupa Password?
+              Lupa Password? dd
             </button>
           </p>
 

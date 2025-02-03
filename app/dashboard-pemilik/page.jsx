@@ -143,6 +143,19 @@ export default function DashboardPemilik() {
         throw new Error("User tidak terautentikasi");
       }
 
+      // Log request details for debugging
+      console.log("Sending request:", {
+        url: `/api/pets/${petId}`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "owner-id": owner_id,
+        },
+        body: {
+          adopted: currentStatus === 1 ? 0 : 1,
+        },
+      });
+
       const response = await fetch(`/api/pets/${petId}`, {
         method: "PUT",
         headers: {
@@ -154,30 +167,42 @@ export default function DashboardPemilik() {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Gagal mengubah status");
+      // Log response status for debugging
+      console.log("Response status:", response.status);
+
+      // Try to parse response as JSON
+      let data;
+      try {
+        data = await response.json();
+      } catch (e) {
+        console.error("Error parsing JSON:", e);
+        throw new Error("Invalid JSON response from server");
       }
 
-      const data = await response.json();
+      // Log parsed data for debugging
+      console.log("Response data:", data);
+
+      if (!response.ok) {
+        throw new Error(data.message || "Gagal mengubah status");
+      }
 
       if (data.success) {
-        Swal.fire("Berhasil!", "Status adopsi berhasil diubah!", "success");
-        fetchPets();
+        await Swal.fire({
+          icon: "success",
+          title: "Berhasil!",
+          text: "Status adopsi berhasil diubah!",
+        });
+        await fetchPets(); // Refresh data
       } else {
-        Swal.fire(
-          "Error!",
-          data.message || "Gagal mengubah status adopsi.",
-          "error"
-        );
+        throw new Error(data.message || "Gagal mengubah status adopsi");
       }
     } catch (error) {
       console.error("Error:", error);
-      Swal.fire(
-        "Error!",
-        error.message || "Terjadi kesalahan. Silakan coba lagi.",
-        "error"
-      );
+      await Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: error.message || "Terjadi kesalahan. Silakan coba lagi.",
+      });
     }
   };
 

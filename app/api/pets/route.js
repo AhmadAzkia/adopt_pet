@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool from "@/lib/db"; // Import the pool variable
 import cloudinary from "@/lib/cloudinary";
 
-// ✅ HANDLER GET - Ambil daftar pets dari database
+// GET handler - Fetch pets from the database
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -18,7 +18,7 @@ export async function GET(req) {
     const connection = await pool.getConnection();
     try {
       const [pets] = await connection.execute(
-        "SELECT * FROM pets WHERE owner_id = ?",
+        "SELECT p.*, u.phone as user_phone FROM pets p LEFT JOIN users u ON p.owner_id = u.id WHERE p.owner_id = ?",
         [owner_id]
       );
 
@@ -35,12 +35,12 @@ export async function GET(req) {
   }
 }
 
-// ✅ HANDLER POST - Tambah pet baru ke database
+// POST handler - Add a new pet to the database
 export async function POST(req) {
   try {
     const formData = await req.formData();
 
-    // Ambil nilai dari form
+    // Get all form values
     const name = formData.get("name");
     const type = formData.get("type");
     const breed = formData.get("breed");
@@ -59,11 +59,11 @@ export async function POST(req) {
       );
     }
 
-    // ✅ CEK APAKAH OWNER_ID ADA DI TABEL USERS
+    // Check if owner_id exists in the users table
     const connection = await pool.getConnection();
     try {
       const [userCheck] = await connection.execute(
-        "SELECT id FROM users WHERE id = ?",
+        "SELECT id, phone FROM users WHERE id = ?",
         [owner_id]
       );
 
@@ -77,7 +77,7 @@ export async function POST(req) {
       connection.release();
     }
 
-    // ✅ HANDLE UPLOAD GAMBAR KE CLOUDINARY
+    // Handle image upload to Cloudinary
     let imageUrl = "";
     const image = formData.get("image");
 
@@ -112,13 +112,17 @@ export async function POST(req) {
       }
     }
 
-    // ✅ SIMPAN DATA PET KE DATABASE
+    // Save pet data to the database
     try {
       const connection = await pool.getConnection();
       try {
         const [result] = await connection.execute(
-          `INSERT INTO pets (owner_id, name, type, breed, age, gender, image, location, latitude, longitude, description, created_at, updated_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
+          `INSERT INTO pets (
+            owner_id, name, type, breed, age, gender, 
+            image, location, latitude, longitude, 
+            description, created_at, updated_at
+          )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
           [
             owner_id,
             name,
@@ -158,7 +162,7 @@ export async function POST(req) {
   }
 }
 
-// ✅ HANDLER DELETE - Hapus data pet dari database
+// DELETE handler - Remove a pet from the database
 export async function DELETE(req) {
   try {
     const { petId } = await req.json();

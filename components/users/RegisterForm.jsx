@@ -12,6 +12,7 @@ export default function RegisterForm() {
     username: "",
     email: "",
     password: "",
+    owner_phone: "",
     role: "pengadopsi",
   });
   const [step, setStep] = useState(1); // Step 1: Register, Step 2: OTP Verification
@@ -19,7 +20,21 @@ export default function RegisterForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // Memastikan nomor telepon dimulai dengan "62" jika mulai dengan "0"
+    if (name === "owner_phone") {
+      let formattedPhone = value.replace(/\D/g, ""); // Menghapus karakter non-digit
+
+      if (formattedPhone.startsWith("0")) {
+        formattedPhone = "62" + formattedPhone.slice(1); // Mengganti "0" dengan "62"
+      } else if (!formattedPhone.startsWith("62")) {
+        formattedPhone = "62" + formattedPhone; // Menambahkan "62" jika tidak ada
+      }
+
+      setFormData({ ...formData, [name]: formattedPhone });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleRegister = async (e) => {
@@ -150,6 +165,15 @@ export default function RegisterForm() {
                 name="password"
                 placeholder="Password"
                 value={formData.password}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 border rounded-xl"
+              />
+              <input
+                type="tel"
+                name="owner_phone"
+                placeholder="Nomor WhatsApp"
+                value={formData.owner_phone}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-3 border rounded-xl"

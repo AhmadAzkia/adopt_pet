@@ -6,12 +6,31 @@ import { CatFilters } from "@/components/pet-list/cats/cat-filters";
 import { MapView } from "@/components/pet-list/map-view";
 import { LoadingSkeleton } from "@/components/pet-list/loading-skeleton";
 
+// Fungsi untuk mengategorikan usia kucing
+const ageCategory = (age) => {
+  if (age <= 1) return "Anak"; // Usia 0-1 tahun
+  if (age >= 2 && age <= 5) return "Muda"; // Usia 2-5 tahun
+  if (age > 5) return "Dewasa"; // Usia lebih dari 5 tahun
+  return "Semua"; // Jika tidak ada usia yang terdefinisi
+};
+
 export default function CatList() {
   const { cats, search, setSearch, filters, setFilters, loading, error } =
     useCatList();
 
   // Only show cats with valid coordinates
   const catsWithLocation = cats.filter((cat) => cat.latitude && cat.longitude);
+
+  // Filter cats based on selected filters
+  const filteredCats = cats.filter((cat) => {
+    const ageFilter =
+      filters.age === "Semua" ? true : ageCategory(cat.age) === filters.age;
+    return (
+      (filters.breed === "Semua" || cat.breed === filters.breed) &&
+      ageFilter &&
+      (filters.gender === "Semua" || cat.gender === filters.gender)
+    );
+  });
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -62,9 +81,9 @@ export default function CatList() {
               <LoadingSkeleton />
             ) : error ? (
               <p className="text-center text-red-500 py-8">{error}</p>
-            ) : cats.length > 0 ? (
+            ) : filteredCats.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {cats.map((cat) => (
+                {filteredCats.map((cat) => (
                   <CatCard key={cat.id} cat={cat} />
                 ))}
               </div>

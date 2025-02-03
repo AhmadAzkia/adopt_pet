@@ -2,12 +2,42 @@
 
 import { useState } from "react";
 
-// Add proper named export
+// Daftar ras kucing yang bisa dipilih
+const catBreeds = [
+  "Persian",
+  "Siamese",
+  "Maine Coon",
+  "Bengal",
+  "Ragdoll",
+  "Abyssinian",
+  "British Shorthair",
+  "Scottish Fold",
+  "Sphynx",
+  "Russian Blue",
+  "Birman",
+];
+
+// Daftar ras anjing yang bisa dipilih
+const dogBreeds = [
+  "Bulldog",
+  "Beagle",
+  "Poodle",
+  "Labrador",
+  "Golden Retriever",
+  "German Shepherd",
+  "Rottweiler",
+  "Dachshund",
+  "Boxer",
+  "Chihuahua",
+];
+
 export function PetForm({ onSubmit, loading }) {
   const [imagePreview, setImagePreview] = useState(null);
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [petType, setPetType] = useState("");
+  const [petType, setPetType] = useState(""); // Untuk jenis hewan
+  const [breed, setBreed] = useState(""); // Untuk ras
+  const [location, setLocation] = useState(""); // Lokasi
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -90,12 +120,30 @@ export function PetForm({ onSubmit, loading }) {
             >
               Ras
             </label>
-            <input
-              type="text"
+            <select
               id="breed"
               name="breed"
+              value={breed}
+              onChange={(e) => setBreed(e.target.value)} // Set breed
               className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
-            />
+              disabled={!petType} // Disable dropdown if no pet type selected
+            >
+              <option value="">
+                Pilih ras {petType === "cat" ? "kucing" : "anjing"}
+              </option>
+              {petType === "cat" &&
+                catBreeds.map((breedOption, index) => (
+                  <option key={index} value={breedOption}>
+                    {breedOption}
+                  </option>
+                ))}
+              {petType === "dog" &&
+                dogBreeds.map((breedOption, index) => (
+                  <option key={index} value={breedOption}>
+                    {breedOption}
+                  </option>
+                ))}
+            </select>
           </div>
 
           <div>

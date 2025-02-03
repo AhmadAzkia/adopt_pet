@@ -1,62 +1,44 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
 
-export async function PUT(req, { params }) {
+export async function GET(req, { params }) {
   try {
-    const { petId } = params;
-    const { adopted } = await req.json();
-    const owner_id = req.headers.get("owner-id");
-
-    if (!petId || !owner_id) {
+    const petId = params.petId;
+    if (!petId) {
       return NextResponse.json(
-        { success: false, message: "Pet ID atau Owner ID tidak ditemukan" },
+        { success: false, message: "Pet ID tidak ditemukan" },
         { status: 400 }
       );
     }
 
     const connection = await pool.getConnection();
     try {
-      // Cek apakah pet dimiliki oleh owner yang benar
-      const [petCheck] = await connection.execute(
-        "SELECT adopted FROM pets WHERE id = ? AND owner_id = ?",
-        [petId, owner_id]
+      const [pets] = await connection.execute(
+        `SELECT p.*, u.username as owner_name, u.email as owner_email, p.owner_phone
+         FROM pets p 
+         JOIN users u ON p.owner_id = u.id 
+         WHERE p.id = ?`,
+        [petId]
       );
 
-      if (petCheck.length === 0) {
+      if (pets.length === 0) {
         return NextResponse.json(
-          {
-            success: false,
-            message: "Pet tidak ditemukan atau Anda tidak memiliki akses",
-          },
+          { success: false, message: "Pet tidak ditemukan" },
           { status: 404 }
         );
       }
 
-      const oldStatus = petCheck[0].adopted;
+      const pet = pets[0];
+      const { owner_id, ...petDetails } = pet;
 
-      // Update status di tabel pets
-      await connection.execute(
-        "UPDATE pets SET adopted = ?, updated_at = NOW() WHERE id = ?",
-        [adopted, petId]
-      );
-
-      // Simpan riwayat ke adopt_log
-      await connection.execute(
-        "INSERT INTO adopt_log (pet_id, owner_id, status_before, status_after, created_at) VALUES (?, ?, ?, ?, NOW())",
-        [petId, owner_id, oldStatus, adopted]
-      );
-
-      return NextResponse.json({
-        success: true,
-        message: "Status adopsi berhasil diubah",
-      });
+      return NextResponse.json({ success: true, pet: petDetails });
     } finally {
       connection.release();
     }
   } catch (error) {
-    console.error("Error updating pet status:", error);
+    console.error("Error fetching pet details:", error);
     return NextResponse.json(
-      { success: false, message: "Gagal mengubah status adopsi" },
+      { success: false, message: "Gagal mengambil detail pet" },
       { status: 500 }
     );
   }

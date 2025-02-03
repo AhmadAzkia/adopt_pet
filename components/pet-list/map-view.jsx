@@ -28,9 +28,8 @@ export function MapView({ pets }) {
 
   // Mendapatkan lokasi pengguna
   const getUserLocation = useCallback(async (e) => {
-    e.preventDefault(); // Mencegah form submit dan refresh halaman
+    e.preventDefault();
     if (navigator.geolocation) {
-      // Tampilkan loading saat mengambil lokasi
       Swal.fire({
         title: "Mengambil Lokasi Anda",
         text: "Mohon tunggu sebentar...",
@@ -41,20 +40,24 @@ export function MapView({ pets }) {
         },
       });
 
-      // Menunggu lokasi pengguna dari geolocation API
       try {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            setUserLocation({
+            const newUserLocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
-            });
-            setLocationFetched(true); // Lokasi berhasil diambil
+            };
 
-            // Menambahkan delay 1 detik sebelum menutup SweetAlert
+            // Verifikasi lokasi yang diambil
+            console.log("Lokasi yang berhasil diambil:", newUserLocation);
+            // Simpan lokasi pengguna dan pastikan state diupdate
+            setUserLocation(newUserLocation);
+            setLocationFetched(true);
+
+            // Delay untuk menutup SweetAlert
             setTimeout(() => {
-              Swal.close(); // Menutup SweetAlert setelah sedikit jeda
-            }, 1000); // Delay 1 detik
+              Swal.close();
+            }, 1000);
           },
           (error) => {
             console.error("Error getting location:", error);

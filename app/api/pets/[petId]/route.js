@@ -1,44 +1,67 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
 
-export async function GET(req, { params }) {
+export async function PUT(req, { params }) {
   try {
-    const petId = params.petId;
-    if (!petId) {
+    const petId = (await params).petId;
+    console.log("PUT request received for pet ID:", petId);
+
+    const { adopted } = await req.json();
+    const ownerId = req.headers.get("owner-id");
+
+    if (!petId || adopted === undefined || !ownerId) {
       return NextResponse.json(
-        { success: false, message: "Pet ID tidak ditemukan" },
+        { success: false, message: "Invalid request data" },
         { status: 400 }
       );
     }
 
     const connection = await pool.getConnection();
+
     try {
+      // First, check if the pet belongs to the owner
       const [pets] = await connection.execute(
-        `SELECT p.*, u.username as owner_name, u.email as owner_email, p.owner_phone
-         FROM pets p 
-         JOIN users u ON p.owner_id = u.id 
-         WHERE p.id = ?`,
+        "SELECT owner_id FROM pets WHERE id = ?",
         [petId]
       );
 
       if (pets.length === 0) {
         return NextResponse.json(
-          { success: false, message: "Pet tidak ditemukan" },
+          { success: false, message: "Pet not found" },
           { status: 404 }
         );
       }
 
-      const pet = pets[0];
-      const { owner_id, ...petDetails } = pet;
+      if (pets[0].owner_id !== Number.parseInt(ownerId)) {
+        return NextResponse.json(
+          { success: false, message: "Unauthorized" },
+          { status: 401 }
+        );
+      }
 
-      return NextResponse.json({ success: true, pet: petDetails });
+      // Update the pet's adoption status
+      await connection.execute("UPDATE pets SET adopted = ? WHERE id = ?", [
+        adopted ? 1 : 0,
+        petId,
+      ]);
+
+      // Log the adoption status change
+      await connection.execute(
+        "INSERT INTO adopt_log (pet_id, owner_id, status_before, status_after) VALUES (?, ?, ?, ?)",
+        [petId, ownerId, !adopted ? 1 : 0, adopted ? 1 : 0]
+      );
+
+      return NextResponse.json({
+        success: true,
+        message: "Pet adoption status updated successfully",
+      });
     } finally {
       connection.release();
     }
   } catch (error) {
-    console.error("Error fetching pet details:", error);
+    console.error("Error updating pet adoption status:", error);
     return NextResponse.json(
-      { success: false, message: "Gagal mengambil detail pet" },
+      { success: false, message: "Internal server error" },
       { status: 500 }
     );
   }

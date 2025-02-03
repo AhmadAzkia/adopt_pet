@@ -17,9 +17,9 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-gradient-to-r from-blue-800 to-blue-700 py-4 font-poppins">
+    <footer className="bg-primary py-4 font-poppins">
       <div className="container mx-auto px-4">
-        <p className="text-sm text-blue-200 text-center">
+        <p className="text-sm text-white text-center">
           &copy; {new Date().getFullYear()} Adopt Pet App. All Rights Reserved.
         </p>
       </div>

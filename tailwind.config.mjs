@@ -10,8 +10,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: '#2D4F8B',  // Biru utama
+        secondary: '#6CBF84', // Hijau lembut
+        background: '#ECF7FB', // Biru muda
+        cmuda: '#333333',  // Coklat muda
       },
     },
   },
   plugins: [],
 };
+
+

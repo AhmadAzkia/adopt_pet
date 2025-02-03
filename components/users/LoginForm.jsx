@@ -188,7 +188,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-[#ECF7FB]">
+    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-background">
       <div className="w-full max-w-md">
         <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-300">
           <div className="flex flex-col items-center mb-8">
@@ -199,10 +199,10 @@ export default function LoginForm() {
               width={140}
               className="mb-6 transform hover:scale-105 transition-transform duration-300"
             />
-            <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r text-transparent from-blue-600 to-blue-700 bg-clip-text">
+            <h1 className="text-3xl font-bold mb-2 text-primary">
               Adopt Pet
             </h1>
-            <p className="text-gray-600 text-center">
+            <p className="text-cmuda text-center text-sm md:text-base">
               Silahkan Login untuk Login ke aplikasi.
             </p>
           </div>
@@ -212,7 +212,7 @@ export default function LoginForm() {
           )}
 
           <form className="space-y-6" onSubmit={handleLogin}>
-            <div className="space-y-2">
+            <div className="space-y-1">
               <label
                 htmlFor="identifier"
                 className="block font-medium text-gray-700"
@@ -230,7 +230,7 @@ export default function LoginForm() {
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1">
               <label
                 htmlFor="password"
                 className="block font-medium text-gray-700"
@@ -250,7 +250,7 @@ export default function LoginForm() {
 
             <button
               type="submit"
-              className="w-full py-3 px-6 bg-gradient-to-r from-[#234edc] to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-blue-900/20"
+              className="w-full py-3 px-6 bg-primary text-white rounded-xl hover:bg-[#1F3D73] transition-all duration-300 shadow-lg shadow-blue-900/20"
             >
               Login
             </button>
@@ -259,17 +259,17 @@ export default function LoginForm() {
           <p className="mt-4 text-center text-gray-600">
             <button
               onClick={handleForgotPassword}
-              className="text-blue-900 hover:text-blue-800"
+              className="text-primary hover:text-[#1F3D73]"
             >
               Lupa Password?
             </button>
           </p>
 
-          <p className="mt-6 text-center text-gray-600">
+          <p className="mt-6 text-center text-cmuda">
             Belum punya akun?{" "}
             <Link
               href="/register"
-              className="font-semibold text-blue-900 hover:text-blue-800 transition-colors duration-300"
+              className="font-semibold text-primary hover:text-[#1F3D73] transition-colors duration-300"
             >
               Register
             </Link>

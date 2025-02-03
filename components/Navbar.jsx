@@ -125,10 +125,10 @@ export default function Navbar() {
                 <Link
                   href={item.id}
                   key={item.id}
-                  className="text-gray-700 hover:text-blue-900 transition-colors duration-300 font-medium relative group"
+                  className="text-cmuda hover:text-secondary transition-colors duration-300 font-medium relative group"
                 >
                   {item.name}
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-blue-900 to-blue-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 </Link>
               ))}
             </div>
@@ -160,73 +160,20 @@ export default function Navbar() {
               <div className="flex items-center space-x-4">
                 <Link
                   href="/login"
-                  className="px-4 py-2 bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl hover:from-blue-800 hover:to-blue-700 transition-all duration-300 shadow-lg shadow-blue-900/20"
+                  className="px-4 py-2 bg-primary text-white rounded-xl hover:bg-[#1F3D73] transition-all duration-300 shadow-lg shadow-blue-900/20"
                 >
                   Masuk
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 border-2 border-blue-900 text-blue-900 rounded-xl hover:bg-blue-900 hover:text-white transition-all duration-300 shadow-lg shadow-blue-900/20"
+                  className="px-4 py-2 bg-secondary text-white rounded-xl hover:bg-[#4C8B5A] hover:text-white transition-all duration-300 shadow-lg shadow-blue-900/20"
                 >
                   Daftar
                 </Link>
               </div>
-            )}
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-blue-100 transition-colors duration-300"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-blue-900" />
-              ) : (
-                <Menu className="w-6 h-6 text-blue-900" />
-              )}
-            </button>
+            )}       
           </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-blue-100">
-            {role !== "pemilik" &&
-              [
-                {
-                  name: "Beranda",
-                  id: "/",
-                },
-                {
-                  name: "Layanan",
-                  id: "#layanan",
-                },
-                {
-                  name: "Daftar Pet",
-                  id: "#daftar-pet",
-                },
-                {
-                  name: "Kontak Kami",
-                  id: "#kontak-kami",
-                },
-                ...(role === "Pemilik Hewan"
-                  ? [
-                      {
-                        name: "Open Adopsi",
-                        id: "/open-adopsi",
-                      },
-                    ]
-                  : []),
-              ].map((item) => (
-                <Link
-                  href={item.id}
-                  key={item.id}
-                  className="block w-full text-left py-2 px-4 text-gray-700 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors duration-300"
-                >
-                  {item.name}
-                </Link>
-              ))}
-          </div>
-        )}
       </div>
     </nav>
   );

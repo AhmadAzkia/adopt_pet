@@ -118,7 +118,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-cmuda">
+          <tbody className="bg-white divide-y">
             {filteredPets.map((pet) => (
               <tr key={pet.id} className="hover:bg-gray-50">
                 <td className="px-8 py-5 whitespace-nowrap">

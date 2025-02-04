@@ -209,14 +209,14 @@ export default function DashboardPemilik() {
   return (
     <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 pb-12">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex-col md:flex-row flex justify-between items-center mb-8">
           <h2 className="text-4xl font-bold text-primary">
             Dashboard Pemilik
           </h2>
           <div className="flex gap-4">
             <button
               onClick={() => setActiveTab("list")}
-              className={`px-6 py-2.5 rounded-lg font-semibold text-base ${
+              className={`px-6 py-2.5 mt-1 md:mt-0 rounded-lg font-semibold text-base ${
                 activeTab === "list"
                   ? "bg-primary text-white"
                   : "bg-white text-secondary border-2 border-secondary"
@@ -226,7 +226,7 @@ export default function DashboardPemilik() {
             </button>
             <button
               onClick={() => setActiveTab("add")}
-              className={`px-6 py-2.5 rounded-lg font-semibold text-base ${
+              className={`px-6 py-2.5 mt-1 md:mt-0 rounded-lg font-semibold text-base ${
                 activeTab === "add"
                   ? "bg-primary text-white"
                   : "bg-white text-secondary border-2 border-secondary"

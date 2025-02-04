@@ -116,25 +116,13 @@ export default function CatDetail() {
             {/* Back Button */}
             <button
               onClick={handleBack}
-              className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg hover:bg-h2
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              transition-colors"
+              className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg hover:bg-h2 transition-colors"
             >
               Kembali
             </button>
           </div>
         </div>
       </div>
-
       {/* Add some spacing at the bottom for the footer */}
       <div className="pt-6 pb-6"></div>
     </div>

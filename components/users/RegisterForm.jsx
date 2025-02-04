@@ -5,6 +5,7 @@ import DataImage from "@/assets/data";
 import Image from "next/image";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { Eye, EyeOff } from "lucide-react"; // Import ikon mata
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function RegisterForm() {
   });
   const [step, setStep] = useState(1); // Step 1: Register, Step 2: OTP Verification
   const [otp, setOtp] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // State untuk menyimpan status tampilan password
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -160,15 +162,27 @@ export default function RegisterForm() {
                 required
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
               />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"} // Mengubah type input password
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5 text-gray-500" />
+                  ) : (
+                    <Eye className="w-5 h-5 text-gray-500" />
+                  )}
+                </span>
+              </div>
               <input
                 type="tel"
                 name="owner_phone"

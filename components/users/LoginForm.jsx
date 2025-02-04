@@ -1,11 +1,11 @@
 "use client";
-
 import React, { useState } from "react";
 import DataImage from "@/assets/data";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { Eye, EyeOff } from "lucide-react"; // Import ikon mata
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ export default function LoginForm() {
     password: "",
   });
   const [errorMessage, setErrorMessage] = useState(""); // Pesan error untuk ditampilkan jika login gagal
+  const [showPassword, setShowPassword] = useState(false); // State untuk menyimpan status tampilan password
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -71,6 +72,7 @@ export default function LoginForm() {
       );
     }
   };
+
   const handleForgotPassword = async () => {
     const { value: email } = await Swal.fire({
       title: "Lupa Password?",
@@ -199,9 +201,7 @@ export default function LoginForm() {
               width={140}
               className="mb-6 transform hover:scale-105 transition-transform duration-300"
             />
-            <h1 className="text-3xl font-bold mb-2 text-primary">
-              Adopt Pet
-            </h1>
+            <h1 className="text-3xl font-bold mb-2 text-primary">Adopt Pet</h1>
             <p className="text-cmuda text-center text-sm md:text-base">
               Silahkan Login untuk Login ke aplikasi.
             </p>
@@ -235,17 +235,29 @@ export default function LoginForm() {
                 htmlFor="password"
                 className="block font-medium text-gray-700"
               ></label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                autoComplete="current-password"
-                placeholder="Masukkan Password..."
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary transition-all duration-300 bg-white/50 backdrop-blur-sm"
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"} // Mengubah type input password
+                  id="password"
+                  name="password"
+                  autoComplete="current-password"
+                  placeholder="Masukkan Password..."
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                  required
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5 text-gray-500" />
+                  ) : (
+                    <Eye className="w-5 h-5 text-gray-500" />
+                  )}
+                </span>
+              </div>
             </div>
 
             <button

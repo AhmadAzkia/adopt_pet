@@ -42,6 +42,21 @@ export default function RegisterForm() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
+      const checkPhoneResponse = await fetch("/api/check-phone", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: formData.owner_phone,
+          role: formData.role,
+        }),
+      });
+
+      const phoneData = await checkPhoneResponse.json();
+      if (!checkPhoneResponse.ok) {
+        Swal.fire("Gagal", phoneData.error, "error");
+        return;
+      }
+
       const response = await fetch("/api/otp/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

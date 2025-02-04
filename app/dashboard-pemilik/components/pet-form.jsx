@@ -72,7 +72,7 @@ export function PetForm({ onSubmit, loading }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
+    <div className="bg-white rounded-xl shadow-lg p-8 text-cmuda">
       <h3 className="text-2xl font-bold mb-6">Open Adopsi</h3>
       <form onSubmit={onSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -88,7 +88,7 @@ export function PetForm({ onSubmit, loading }) {
               id="name"
               name="name"
               required
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
             />
           </div>
 
@@ -105,7 +105,7 @@ export function PetForm({ onSubmit, loading }) {
               required
               value={petType}
               onChange={(e) => setPetType(e.target.value)}
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-secondary focus:ring-2 focus:ring-secondary/20"
             >
               <option value="">Pilih jenis hewan</option>
               <option value="cat">Kucing</option>
@@ -125,7 +125,7 @@ export function PetForm({ onSubmit, loading }) {
               name="breed"
               value={breed}
               onChange={(e) => setBreed(e.target.value)} // Set breed
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-secondary focus:ring-2 focus:ring-secondary/20"
               disabled={!petType} // Disable dropdown if no pet type selected
             >
               <option value="">
@@ -156,7 +156,7 @@ export function PetForm({ onSubmit, loading }) {
               name="age"
               min="0"
               step="1"
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
             />
           </div>
 
@@ -170,7 +170,7 @@ export function PetForm({ onSubmit, loading }) {
             <select
               id="gender"
               name="gender"
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-secondary focus:ring-2 focus:ring-secondary/20"
             >
               <option value="">Pilih jenis kelamin</option>
               <option value="male">Jantan</option>
@@ -191,7 +191,7 @@ export function PetForm({ onSubmit, loading }) {
               name="image"
               accept="image/*"
               onChange={handleImageChange}
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-secondary focus:ring-2 focus:ring-secondary/20"
             />
             {imagePreview && (
               <img
@@ -215,10 +215,9 @@ export function PetForm({ onSubmit, loading }) {
               name="location"
               onChange={handleLocationChange}
               placeholder="Masukkan alamat lengkap"
-              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
             />
-          </div>
-
+          </div><br />
           <div>
             <label
               htmlFor="latitude"
@@ -232,7 +231,7 @@ export function PetForm({ onSubmit, loading }) {
               name="latitude"
               value={latitude}
               readOnly
-              className="w-full p-3 border-2 border-gray-300 rounded-lg bg-gray-50"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
             />
           </div>
 
@@ -249,7 +248,7 @@ export function PetForm({ onSubmit, loading }) {
               name="longitude"
               value={longitude}
               readOnly
-              className="w-full p-3 border-2 border-gray-300 rounded-lg bg-gray-50"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
             />
           </div>
         </div>
@@ -265,14 +264,14 @@ export function PetForm({ onSubmit, loading }) {
             id="description"
             name="description"
             rows={4}
-            className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20 resize-none"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary resize-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-[#1e40af] text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-[#1e3a8a] transition-colors disabled:opacity-50"
+          className="bg-primary text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-h1 transition-colors disabled:opacity-50"
         >
           {loading ? "Memproses..." : "Buka Adopsi"}
         </button>

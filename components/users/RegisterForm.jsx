@@ -135,7 +135,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-gradient-to-br bg-[#ECF7FB]">
+    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-lightBackground">
       <div className="absolute inset-0 opacity-5" />
       <div className="w-full max-w-md">
         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-blue-100">

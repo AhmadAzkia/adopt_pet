@@ -190,7 +190,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-background">
+    <div className="min-h-screen flex items-center justify-center py-32 px-4 bg-lightBackground">
       <div className="w-full max-w-md">
         <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-300">
           <div className="flex flex-col items-center mb-8">

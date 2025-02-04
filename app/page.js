@@ -44,7 +44,7 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-background">
+      <section className="relative min-h-screen flex items-center pt-16 overflow-hidden bg-lightBackground">
         <div className="container mx-auto px-4 relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -97,7 +97,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="layanan" className="py-20 bg-background">
+      <section id="layanan" className="py-20 bg-lightBackground">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-primary bg-clip-text">

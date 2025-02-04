@@ -3,7 +3,8 @@ import pool from "@/lib/db";
 
 export async function GET(req, { params }) {
   try {
-    const { id } = params;
+    // Tunggu params sebelum digunakan
+    const { id } = await params; // Menambahkan 'await' di sini
     const connection = await pool.getConnection();
 
     try {

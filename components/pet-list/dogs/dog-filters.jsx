@@ -4,6 +4,7 @@ export function DogFilters({ filters, setFilters }) {
       <h2 className="text-xl font-bold mb-6">Filter</h2>
 
       <div className="space-y-4">
+        {/* Filter Ras */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Ras</label>
           <select
@@ -16,9 +17,16 @@ export function DogFilters({ filters, setFilters }) {
             <option value="Labrador">Labrador</option>
             <option value="German Shepherd">German Shepherd</option>
             <option value="Husky">Husky</option>
+            <option value="Bulldog">Bulldog</option>
+            <option value="Poodle">Poodle</option>
+            <option value="Beagle">Beagle</option>
+            <option value="Rottweiler">Rottweiler</option>
+            <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+            <option value="Boxer">Boxer</option>
           </select>
         </div>
 
+        {/* Filter Usia */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Usia</label>
           <select
@@ -27,12 +35,13 @@ export function DogFilters({ filters, setFilters }) {
             className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
           >
             <option value="Semua">Semua</option>
-            <option value="Anak">Anak</option>
-            <option value="Muda">Muda</option>
-            <option value="Dewasa">Dewasa</option>
+            <option value="Anak">Anak (0-1 tahun)</option>
+            <option value="Muda">Muda (2-5 tahun)</option>
+            <option value="Dewasa">Dewasa (lebih dari 5 tahun)</option>
           </select>
         </div>
 
+        {/* Filter Jenis Kelamin */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Jenis Kelamin</label>
           <select
@@ -41,8 +50,8 @@ export function DogFilters({ filters, setFilters }) {
             className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
           >
             <option value="Semua">Semua</option>
-            <option value="Jantan">Jantan</option>
-            <option value="Betina">Betina</option>
+            <option value="male">Jantan</option>
+            <option value="female">Betina</option>
           </select>
         </div>
       </div>

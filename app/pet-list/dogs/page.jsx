@@ -6,12 +6,28 @@ import { DogFilters } from "@/components/pet-list/dogs/dog-filters";
 import { MapView } from "@/components/pet-list/map-view";
 import { LoadingSkeleton } from "@/components/pet-list/loading-skeleton";
 
+const ageCategory = (age) => {
+  if (age <= 1) return "Anak"; // Usia 0-1 tahun
+  if (age >= 2 && age <= 5) return "Muda"; // Usia 2-5 tahun
+  if (age > 5) return "Dewasa"; // Usia lebih dari 5 tahun
+  return "Semua"; // Jika tidak ada usia yang terdefinisi
+};
 export default function DogList() {
   const { dogs, search, setSearch, filters, setFilters, loading, error } =
     useDogList();
 
   // Only show dogs with valid coordinates
   const dogsWithLocation = dogs.filter((dog) => dog.latitude && dog.longitude);
+
+  const filteredDogs = dogs.filter((dog) => {
+    const ageFilter =
+      filters.age === "Semua" ? true : ageCategory(dog.age) === filters.age;
+    return (
+      (filters.breed === "Semua" || dog.breed === filters.breed) &&
+      ageFilter &&
+      (filters.gender === "Semua" || dog.gender === filters.gender)
+    );
+  });
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">

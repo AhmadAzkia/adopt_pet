@@ -72,6 +72,8 @@ export default function Navbar() {
     });
   };
 
+  const logoLink = role === "pemilik" ? "/dashboard-pemilik" : "/";
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -82,7 +84,7 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href={logoLink} className="flex items-center space-x-2">
             <Image
               src={DataImage.kujing3}
               alt="Adopt Pet Logo"
@@ -171,7 +173,7 @@ export default function Navbar() {
                   Daftar
                 </Link>
               </div>
-            )}       
+            )}
           </div>
         </div>
       </div>

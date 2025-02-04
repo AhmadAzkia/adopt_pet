@@ -35,10 +35,10 @@ export default function CatList() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
       <div className="container mx-auto py-24 px-4 md:px-8">
-        <h1 className="text-4xl font-bold text-center text-[#1e40af] mb-4">
+        <h1 className="text-4xl font-bold text-center text-primary mb-4">
           Daftar Kucing Untuk Diadopsi
         </h1>
-        <p className="text-base text-gray-600 text-center mb-12">
+        <p className="text-base text-cmuda text-center mb-12">
           Temukan teman berbulu yang cocok untuk Anda di sini.
         </p>
 
@@ -55,15 +55,17 @@ export default function CatList() {
               <div className="relative flex-1">
                 <input
                   type="text"
-                  placeholder="Cari kucing berdasarkan nama atau ras..."
+                  placeholder="Cari kucing . . ."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+                  className="w-full pl-10 pr-4 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-cmuda"
                   fill="none"
+                  width={50}
+                  height={50}
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
@@ -88,7 +90,7 @@ export default function CatList() {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-gray-500 py-8">
+              <p className="text-center text-cmuda py-8">
                 Tidak ada kucing yang sesuai dengan filter yang dipilih.
               </p>
             )}

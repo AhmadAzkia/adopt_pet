@@ -90,19 +90,19 @@ export function CatCard({ cat }) {
 
   return (
     <div className="border-2 border-gray-200 rounded-xl overflow-hidden bg-white">
-      <div className="relative aspect-square">
+      <div className="w-full relative aspect-square">
         <Image
           src={cat.image || "/placeholder.svg"}
           alt={cat.name}
-          fill
-          className="object-cover"
+          layout="fill"
+          className="object-cover mt-5"
         />
       </div>
       <div className="p-4">
-        <h3 className="font-semibold text-lg mb-2">{cat.name}</h3>
-        <div className="space-y-1 text-sm text-gray-600">
-          <p className="flex items-center gap-1">
-            <MapPin className="w-4 h-4" />
+        <h3 className="font-semibold text-lg mt-5 mb-2">{cat.name}</h3>
+        <div className="space-y-1 text-sm text-cmuda">
+          <p className="flex">
+            <MapPin className="w-5 h-5 mr-2" />
             {cat.location}
           </p>
           <p>Ras: {cat.breed}</p>
@@ -113,7 +113,7 @@ export function CatCard({ cat }) {
       <div className="p-4 pt-0 flex gap-3">
         <button
           onClick={handleContactOwner}
-          className="flex-1 px-4 py-2 bg-[#25D366] text-white rounded-lg hover:bg-[#128C7E] transition-colors text-center flex items-center justify-center"
+          className="flex-1 px-4 py-2 bg-secondary text-white rounded-lg hover:bg-h2 transition-colors text-center flex items-center justify-center"
         >
           <MessageCircle className="w-5 h-5 mr-2" />
           Hubungi via WhatsApp

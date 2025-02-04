@@ -48,7 +48,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
             placeholder="Cari nama atau ras..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
+            className="w-full pl-10 pr-4 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

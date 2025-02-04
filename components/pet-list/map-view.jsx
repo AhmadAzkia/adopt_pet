@@ -143,7 +143,7 @@ export function MapView({ pets }) {
         <div className="flex justify-end">
           <button
             onClick={getUserLocation}
-            className="flex items-center gap-2 px-4 py-2 bg-[#1e40af] text-white rounded-lg hover:bg-[#1e3a8a] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-[#1e3a8a] transition-colors"
           >
             <Navigation2 className="w-4 h-4" />
             Gunakan Lokasi Saya
@@ -214,29 +214,29 @@ export function MapView({ pets }) {
               }}
             >
               <div className="p-3 max-w-[250px]">
-                <div className="w-full h-24 relative mb-2">
+                <div className="w-full relative mb-2">
                   <img
                     src={selectedPet.image || "/placeholder.svg"}
                     alt={selectedPet.name}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-lg text-cmuda"
                   />
                 </div>
                 <h3 className="font-bold text-lg mb-1">{selectedPet.name}</h3>
-                <p className="text-sm text-gray-600 mb-1">
+                <p className="text-sm text-cmuda mb-1">
                   Ras: {selectedPet.breed}
                 </p>
-                <p className="text-sm text-gray-600 mb-2">
+                <p className="text-sm text-cmuda mb-2">
                   Lokasi: {selectedPet.location}
                 </p>
                 {distance && (
-                  <p className="text-sm font-semibold text-[#1e40af] mb-2">
+                  <p className="text-sm font-semibold text-primary mb-2">
                     Jarak: {distance} km dari lokasi Anda
                   </p>
                 )}
                 <div className="flex gap-2">
                   <a
                     href={`/pet-list/${selectedPet.type}s/${selectedPet.id}`}
-                    className="flex-1 px-3 py-2 bg-[#1e40af] text-white text-center rounded-lg text-sm hover:bg-[#1e3a8a] transition-colors"
+                    className="flex-1 px-3 py-2 bg-primary text-white text-center rounded-lg text-sm hover:bg-[#1e3a8a] transition-colors"
                   >
                     Lihat Detail
                   </a>
@@ -244,7 +244,7 @@ export function MapView({ pets }) {
                     href={`https://www.google.com/maps/dir/?api=1&destination=${selectedPet.latitude},${selectedPet.longitude}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 px-3 py-2 border border-[#1e40af] text-[#1e40af] text-center rounded-lg text-sm hover:bg-gray-50 transition-colors"
+                    className="flex-1 px-3 py-2 border border-primary text-primary text-center rounded-lg text-sm hover:bg-gray-100 transition-colors"
                   >
                     Rute
                   </a>

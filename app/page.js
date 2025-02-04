@@ -42,7 +42,7 @@ export default function Home() {
         <div className="container mx-auto px-4 relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
-              <div className="flex items-center gap-3 hidden md:flex">
+              <div className="items-center gap-3 hidden md:flex">
                 <span className="px-4 py-1.5 bg-secondary text-white rounded-full text-sm font-medium shadow-lg shadow-blue-900/20 flex items-center gap-2">
                   <Paw className="w-4 h-4" />
                   Adopt Pet App

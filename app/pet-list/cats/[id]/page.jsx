@@ -47,7 +47,7 @@ export default function CatDetail() {
     return (
       <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
-          <p className="text-center text-gray-500">Memuat detail kucing...</p>
+          <p className="text-center text-cmuda">Memuat detail kucing...</p>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ export default function CatDetail() {
     return (
       <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
-          <p className="text-center text-gray-500">Kucing tidak ditemukan</p>
+          <p className="text-center text-cmuda">Kucing tidak ditemukan</p>
         </div>
       </div>
     );
@@ -81,7 +81,8 @@ export default function CatDetail() {
             <Image
               src={cat.image || "/placeholder.svg"}
               alt={cat.name}
-              fill
+              width={50}
+              height={50}
               className="object-cover"
               priority
             />

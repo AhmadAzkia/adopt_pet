@@ -167,9 +167,6 @@ export default function DashboardPemilik() {
         }),
       });
 
-      // Log response status for debugging
-      console.log("Response status:", response.status);
-
       // Try to parse response as JSON
       let data;
       try {
@@ -209,8 +206,8 @@ export default function DashboardPemilik() {
   return (
     <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 pb-12">
       <div className="max-w-7xl mx-auto">
-        <div className="flex-col md:flex-row flex justify-between items-center mb-8">
-          <h2 className="text-4xl font-bold text-primary">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-4xl font-bold text-[#1e40af]">
             Dashboard Pemilik
           </h2>
           <div className="flex gap-4">
@@ -218,8 +215,8 @@ export default function DashboardPemilik() {
               onClick={() => setActiveTab("list")}
               className={`px-6 py-2.5 mt-1 md:mt-0 rounded-lg font-semibold text-base ${
                 activeTab === "list"
-                  ? "bg-primary text-white"
-                  : "bg-white text-secondary border-2 border-secondary"
+                  ? "bg-[#1e40af] text-white"
+                  : "bg-white text-[#1e40af] border-2 border-[#1e40af]"
               }`}
             >
               Daftar Pet
@@ -228,8 +225,8 @@ export default function DashboardPemilik() {
               onClick={() => setActiveTab("add")}
               className={`px-6 py-2.5 mt-1 md:mt-0 rounded-lg font-semibold text-base ${
                 activeTab === "add"
-                  ? "bg-primary text-white"
-                  : "bg-white text-secondary border-2 border-secondary"
+                  ? "bg-[#1e40af] text-white"
+                  : "bg-white text-[#1e40af] border-2 border-[#1e40af]"
               }`}
             >
               Tambah Pet

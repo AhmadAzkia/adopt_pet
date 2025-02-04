@@ -48,11 +48,11 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
             placeholder="Cari nama atau ras..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+            className="w-full pl-10 pr-4 py-3 px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-cmuda"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -71,7 +71,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
             onChange={(e) =>
               setFilter((prev) => ({ ...prev, type: e.target.value }))
             }
-            className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
           >
             <option value="all">Semua Jenis</option>
             <option value="cat">Kucing</option>
@@ -82,7 +82,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
             onChange={(e) =>
               setFilter((prev) => ({ ...prev, status: e.target.value }))
             }
-            className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
           >
             <option value="all">Semua Status</option>
             <option value="available">Tersedia</option>
@@ -95,30 +95,30 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
         <table className="min-w-full divide-y-2 divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Foto
               </th>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Nama
               </th>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Jenis
               </th>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Ras
               </th>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Umur
               </th>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-8 py-4 text-left text-sm font-semibold text-gray-600 uppercase tracking-wider">
+              <th className="px-8 py-4 text-left text-sm font-semibold text-cmuda uppercase tracking-wider">
                 Aksi
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-cmuda">
             {filteredPets.map((pet) => (
               <tr key={pet.id} className="hover:bg-gray-50">
                 <td className="px-8 py-5 whitespace-nowrap">
@@ -129,7 +129,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
                   />
                 </td>
                 <td className="px-8 py-5 whitespace-nowrap">
-                  <div className="text-base font-medium text-gray-900">
+                  <div className="text-base font-medium text-cmuda">
                     {pet.name}
                   </div>
                 </td>

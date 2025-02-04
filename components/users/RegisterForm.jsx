@@ -131,11 +131,11 @@ export default function RegisterForm() {
                 height={140}
                 className="mb-6 transform hover:scale-105 transition-transform duration-300"
               />
-              <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r text-transparent from-blue-600 to-blue-700 bg-clip-text">
+              <h1 className="text-3xl font-bold mb-2 ml-5 text-primary bg-clip-text">
                 Adopt Pet
               </h1>
             </div>
-            <p className="text-gray-600 text-center">
+            <p className="text-cmuda text-center">
               Silahkan Register untuk masuk ke aplikasi.
             </p>
           </div>
@@ -149,7 +149,7 @@ export default function RegisterForm() {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border rounded-xl"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
               />
               <input
                 type="email"
@@ -158,7 +158,7 @@ export default function RegisterForm() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border rounded-xl"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
               />
               <input
                 type="password"
@@ -167,7 +167,7 @@ export default function RegisterForm() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border rounded-xl"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
               />
               <input
                 type="tel"
@@ -176,20 +176,20 @@ export default function RegisterForm() {
                 value={formData.owner_phone}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border rounded-xl"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
               />
               <select
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border rounded-xl"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm text-cmuda"
               >
                 <option value="pemilik">Pemilik Hewan (Open Adopsi)</option>
                 <option value="pengadopsi">Pengadopsi Hewan</option>
               </select>
               <button
                 type="submit"
-                className="w-full py-3 bg-blue-600 text-white rounded-xl"
+                className="w-full py-3 bg-primary hover:bg-[#1F3D73] text-white rounded-xl"
               >
                 Kirim OTP
               </button>
@@ -202,29 +202,29 @@ export default function RegisterForm() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 required
-                className="w-full px-4 py-3 border rounded-xl"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
               />
               <button
                 type="submit"
-                className="w-full py-3 bg-green-600 text-white rounded-xl"
+                className="w-full py-3 bg-secondary hover:bg-[#4C8B5A] text-white rounded-xl"
               >
                 Verifikasi OTP
               </button>
               <button
                 type="button"
                 onClick={handleResendOtp}
-                className="w-full py-3 bg-gray-500 text-white rounded-xl mt-2"
+                className="w-full py-3 bg-primary hover:bg-[#1F3D73] text-white rounded-xl mt-2"
               >
                 Kirim Ulang OTP
               </button>
             </form>
           )}
 
-          <p className="mt-6 text-center text-gray-600">
+          <p className="mt-6 text-center text-cmuda">
             Sudah punya akun?{" "}
             <Link
               href="/login"
-              className="font-semibold text-blue-900 hover:text-blue-800 transition-colors duration-300"
+              className="font-semibold text-secondary hover:text-[#4C8B5A] transition-colors duration-300"
             >
               Login
             </Link>

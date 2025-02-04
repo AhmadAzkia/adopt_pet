@@ -210,7 +210,7 @@ export default function DashboardPemilik() {
     <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 pb-12">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-4xl font-bold text-[#1e40af]">
+          <h2 className="text-4xl font-bold text-primary">
             Dashboard Pemilik
           </h2>
           <div className="flex gap-4">
@@ -218,8 +218,8 @@ export default function DashboardPemilik() {
               onClick={() => setActiveTab("list")}
               className={`px-6 py-2.5 rounded-lg font-semibold text-base ${
                 activeTab === "list"
-                  ? "bg-[#1e40af] text-white"
-                  : "bg-white text-[#1e40af] border-2 border-[#1e40af]"
+                  ? "bg-primary text-white"
+                  : "bg-white text-secondary border-2 border-secondary"
               }`}
             >
               Daftar Pet
@@ -228,8 +228,8 @@ export default function DashboardPemilik() {
               onClick={() => setActiveTab("add")}
               className={`px-6 py-2.5 rounded-lg font-semibold text-base ${
                 activeTab === "add"
-                  ? "bg-[#1e40af] text-white"
-                  : "bg-white text-[#1e40af] border-2 border-[#1e40af]"
+                  ? "bg-primary text-white"
+                  : "bg-white text-secondary border-2 border-secondary"
               }`}
             >
               Tambah Pet

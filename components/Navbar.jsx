@@ -137,12 +137,12 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             {username ? (
               <div className="flex items-center space-x-4">
-                <div className="flex items-start px-4 py-2 bg-gradient-to-r from-blue-900 to-blue-800 text-white rounded-xl shadow-lg shadow-blue-900/20">
+                <div className="flex items-start px-4 py-2 bg-secondary text-white rounded-xl shadow-lg shadow-blue-900/20">
                   <div className="flex items-center space-x-2">
                     <span className="font-medium">{username} &nbsp;</span>
                   </div>
                   {role && (
-                    <span className=" text-sm italic text-blue-200">
+                    <span className=" text-sm italic text-green-100">
                       {role}
                     </span>
                   )}
@@ -150,7 +150,7 @@ export default function Navbar() {
                 {isLoggedIn && (
                   <button
                     onClick={handleLogout}
-                    className="flex items-center space-x-2 px-4 py-2 border-2 border-blue-900 text-blue-900 rounded-xl hover:bg-blue-900 hover:text-white transition-all duration-300 shadow-lg shadow-blue-900/20"
+                    className="flex items-center space-x-2 px-4 py-2 border-2 border-primary text-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300 shadow-lg shadow-primary/20"
                   >
                     <span className="hidden sm:inline">Keluar</span>
                   </button>

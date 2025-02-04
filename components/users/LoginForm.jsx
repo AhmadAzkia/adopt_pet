@@ -225,7 +225,7 @@ export default function LoginForm() {
                 placeholder="Masukkan Email atau Username..."
                 value={formData.identifier}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-700 focus:ring focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
                 required
               />
             </div>
@@ -243,7 +243,7 @@ export default function LoginForm() {
                 placeholder="Masukkan Password..."
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-blue-700 focus:ring focus:ring-blue-400 focus:ring-opacity-50 transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-secondary transition-all duration-300 bg-white/50 backdrop-blur-sm"
                 required
               />
             </div>
@@ -259,7 +259,7 @@ export default function LoginForm() {
           <p className="mt-4 text-center text-gray-600">
             <button
               onClick={handleForgotPassword}
-              className="text-primary hover:text-[#1F3D73]"
+              className="text-secondary hover:text-[#4C8B5A] transition-colors duration-300"
             >
               Lupa Password?
             </button>
@@ -269,7 +269,7 @@ export default function LoginForm() {
             Belum punya akun?{" "}
             <Link
               href="/register"
-              className="font-semibold text-primary hover:text-[#1F3D73] transition-colors duration-300"
+              className="font-semibold text-secondary hover:text-[#4C8B5A] transition-colors duration-300"
             >
               Register
             </Link>

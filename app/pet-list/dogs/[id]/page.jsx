@@ -1,19 +1,29 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MapView } from '@/components/pet-list/map-view';
 
-export default function DogDetail({ params }) {
+export default function DogDetail() {
   const [dog, setDog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const params = useParams();
+  const { id } = params;
+  const router = useRouter();
+
+  const handleBack = () => {
+    router.back();
+  };
+
   useEffect(() => {
+    if (!id) return;
+
     const fetchDog = async () => {
       try {
-        const response = await fetch(`/api/pets/dogs/${params.id}`);
+        const response = await fetch(`/api/pets/dogs/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch dog details');
         }
@@ -31,20 +41,13 @@ export default function DogDetail({ params }) {
     };
 
     fetchDog();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
+      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
-          <div className="animate-pulse">
-            <div className="aspect-video bg-gray-200 rounded-xl mb-8" />
-            <div className="space-y-4">
-              <div className="h-8 bg-gray-200 rounded w-1/3" />
-              <div className="h-4 bg-gray-200 rounded w-2/3" />
-              <div className="h-4 bg-gray-200 rounded w-1/2" />
-            </div>
-          </div>
+          <p className="text-center text-cmuda">Memuat detail anjing...</p>
         </div>
       </div>
     );
@@ -52,7 +55,7 @@ export default function DogDetail({ params }) {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
+      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
           <p className="text-center text-red-500">{error}</p>
         </div>
@@ -62,44 +65,30 @@ export default function DogDetail({ params }) {
 
   if (!dog) {
     return (
-      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
+      <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
         <div className="max-w-4xl mx-auto">
-          <p className="text-center text-gray-500">Anjing tidak ditemukan</p>
+          <p className="text-center text-cmuda">Anjing tidak ditemukan</p>
         </div>
       </div>
     );
   }
 
-  const center =
-    dog.latitude && dog.longitude
-      ? {
-          lat: Number.parseFloat(dog.latitude),
-          lng: Number.parseFloat(dog.longitude),
-        }
-      : undefined;
-
   return (
-    <div className="min-h-screen bg-[#f8fafc] pt-28 px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-[#f8fafc] pt-28 px-8 flex flex-col justify-between">
+      <div className="max-w-4xl mx-auto flex flex-col space-y-6">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative aspect-video">
             <Image
               src={dog.image || '/placeholder.svg'}
               alt={dog.name}
               fill
-              className="object-cover"
+              className="object-contain mx-auto mt-5"
               priority
             />
           </div>
           <div className="p-8">
             <div className="flex justify-between items-start mb-6">
               <h1 className="text-3xl font-bold text-gray-900">{dog.name}</h1>
-              <Link
-                href={`/chat/${dog.owner_id}`}
-                className="px-6 py-2 bg-[#1e40af] text-white rounded-lg hover:bg-[#1e3a8a] transition-colors"
-              >
-                Hubungi Pemilik
-              </Link>
             </div>
 
             <div className="grid grid-cols-2 gap-6 mb-8">
@@ -109,12 +98,12 @@ export default function DogDetail({ params }) {
                   <p>Ras: {dog.breed}</p>
                   <p>Usia: {dog.age}</p>
                   <p>Jenis Kelamin: {dog.gender}</p>
+                  <p>Ukuran: {dog.size}</p>
                 </div>
               </div>
               <div>
                 <h2 className="text-lg font-semibold mb-2">Lokasi</h2>
-                <p className="text-gray-600 mb-4">{dog.location}</p>
-                <MapView pets={[dog]} center={center} />
+                <p className="text-gray-600">{dog.location}</p>
               </div>
             </div>
 
@@ -124,9 +113,18 @@ export default function DogDetail({ params }) {
                 <p className="text-gray-600">{dog.description}</p>
               </div>
             )}
+            {/* Back Button */}
+            <button
+              onClick={handleBack}
+              className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg hover:bg-h2 transition-colors"
+            >
+              Kembali
+            </button>
           </div>
         </div>
       </div>
+      {/* Add some spacing at the bottom for the footer */}
+      <div className="pt-6 pb-6"></div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export function DogFilters({ filters, setFilters }) {
           <select
             value={filters.breed}
             onChange={(e) => setFilters({ ...filters, breed: e.target.value })}
-            className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+            className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-secondary focus:ring-secondary"
           >
             <option value="Semua">Semua</option>
             <option value="Golden Retriever">Golden Retriever</option>
@@ -32,7 +32,7 @@ export function DogFilters({ filters, setFilters }) {
           <select
             value={filters.age}
             onChange={(e) => setFilters({ ...filters, age: e.target.value })}
-            className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+            className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-secondary focus:ring-secondary"
           >
             <option value="Semua">Semua</option>
             <option value="Anak">Anak (0-1 tahun)</option>
@@ -47,7 +47,7 @@ export function DogFilters({ filters, setFilters }) {
           <select
             value={filters.gender}
             onChange={(e) => setFilters({ ...filters, gender: e.target.value })}
-            className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-[#1e40af] focus:ring-2 focus:ring-[#1e40af]/20"
+            className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-secondary focus:ring-secondary"
           >
             <option value="Semua">Semua</option>
             <option value="male">Jantan</option>

@@ -1,17 +1,17 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client';
+import { useEffect, useState } from 'react';
 
 export default function Footer() {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
+        const payload = JSON.parse(atob(token.split('.')[1]));
         setRole(payload.role);
       } catch (error) {
-        console.error("Error parsing token:", error);
+        console.error('Error parsing token:', error);
       }
     }
   }, []);

@@ -1,28 +1,28 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Swal from "sweetalert2";
-import DataImage from "@/assets/data";
-import { Menu, X } from "lucide-react";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import Swal from 'sweetalert2';
+import DataImage from '@/assets/data';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
-  const [role, setRole] = useState(""); // Tambahkan state untuk role pengguna
+  const [role, setRole] = useState(''); // Tambahkan state untuk role pengguna
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const updateUserFromToken = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Decode JWT token
+        const payload = JSON.parse(atob(token.split('.')[1])); // Decode JWT token
         setUsername(payload.username);
         setRole(payload.role);
         setIsLoggedIn(true);
       } catch (error) {
-        console.error("Error parsing token:", error);
+        console.error('Error parsing token:', error);
       }
     } else {
       setIsLoggedIn(false);
@@ -33,53 +33,53 @@ export default function Navbar() {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   };
 
   useEffect(() => {
     updateUserFromToken();
 
     // Monitor perubahan localStorage
-    window.addEventListener("storage", updateUserFromToken);
-    return () => window.removeEventListener("storage", updateUserFromToken);
+    window.addEventListener('storage', updateUserFromToken);
+    return () => window.removeEventListener('storage', updateUserFromToken);
   }, []);
 
   const handleLogout = () => {
     Swal.fire({
-      title: "Konfirmasi Logout",
-      text: "Apakah Anda yakin ingin logout?",
-      icon: "warning",
+      title: 'Konfirmasi Logout',
+      text: 'Apakah Anda yakin ingin logout?',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Logout",
-      cancelButtonText: "Batal",
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("token");
+        localStorage.removeItem('token');
 
         // Tampilkan alert logout berhasil
         Swal.fire({
-          title: "Logout Berhasil",
-          text: "Anda telah berhasil logout.",
-          icon: "success",
-          confirmButtonText: "OK",
+          title: 'Logout Berhasil',
+          text: 'Anda telah berhasil logout.',
+          icon: 'success',
+          confirmButtonText: 'OK',
         }).then((okResult) => {
           if (okResult.isConfirmed) {
-            window.location.href = "/";
+            window.location.href = '/';
           }
         });
       }
     });
   };
 
-  const logoLink = role === "pemilik" ? "/dashboard-pemilik" : "/";
+  const logoLink = role === 'pemilik' ? '/dashboard-pemilik' : '/';
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-md shadow-lg border-b border-blue-100"
-          : "bg-transparent"
+          ? 'bg-white/80 backdrop-blur-md shadow-lg border-b border-blue-100'
+          : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-4">
@@ -96,30 +96,30 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          {role !== "pemilik" && (
+          {role !== 'pemilik' && (
             <div className="hidden md:flex items-center space-x-8">
               {[
                 {
-                  name: "Beranda",
-                  id: "/",
+                  name: 'Beranda',
+                  id: '/',
                 },
                 {
-                  name: "Layanan",
-                  id: "#layanan",
+                  name: 'Layanan',
+                  id: '#layanan',
                 },
                 {
-                  name: "Daftar Pet",
-                  id: "#daftar-pet",
+                  name: 'Daftar Pet',
+                  id: '#daftar-pet',
                 },
                 {
-                  name: "Kontak Kami",
-                  id: "#kontak-kami",
+                  name: 'Kontak Kami',
+                  id: '#kontak-kami',
                 },
-                ...(role === "Pemilik Hewan"
+                ...(role === 'Pemilik Hewan'
                   ? [
                       {
-                        name: "Open Adopsi",
-                        id: "/open-adopsi",
+                        name: 'Open Adopsi',
+                        id: '/open-adopsi',
                       },
                     ]
                   : []),

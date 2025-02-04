@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { MapView } from "@/components/pet-list/map-view";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { MapView } from '@/components/pet-list/map-view';
 
 export default function DogDetail({ params }) {
   const [dog, setDog] = useState(null);
@@ -15,13 +15,13 @@ export default function DogDetail({ params }) {
       try {
         const response = await fetch(`/api/pets/dogs/${params.id}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch dog details");
+          throw new Error('Failed to fetch dog details');
         }
         const data = await response.json();
         if (data.success) {
           setDog(data.dog);
         } else {
-          throw new Error(data.message || "Failed to fetch dog details");
+          throw new Error(data.message || 'Failed to fetch dog details');
         }
       } catch (err) {
         setError(err.message);
@@ -84,7 +84,7 @@ export default function DogDetail({ params }) {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative aspect-video">
             <Image
-              src={dog.image || "/placeholder.svg"}
+              src={dog.image || '/placeholder.svg'}
               alt={dog.name}
               fill
               className="object-cover"

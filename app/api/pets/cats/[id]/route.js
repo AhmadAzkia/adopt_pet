@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import { NextResponse } from 'next/server';
+import pool from '@/lib/db';
 
 export async function GET(req, { params }) {
   try {
@@ -15,7 +15,7 @@ export async function GET(req, { params }) {
 
       if (cats.length === 0) {
         return NextResponse.json(
-          { success: false, message: "Kucing tidak ditemukan" },
+          { success: false, message: 'Kucing tidak ditemukan' },
           { status: 404 }
         );
       }
@@ -25,9 +25,9 @@ export async function GET(req, { params }) {
       connection.release();
     }
   } catch (error) {
-    console.error("Error fetching cat details:", error);
+    console.error('Error fetching cat details:', error);
     return NextResponse.json(
-      { success: false, message: "Gagal mengambil detail kucing" },
+      { success: false, message: 'Gagal mengambil detail kucing' },
       { status: 500 }
     );
   }

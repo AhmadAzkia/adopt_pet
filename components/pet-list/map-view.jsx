@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useState, useCallback } from "react";
-import Swal from "sweetalert2";
+import { useState, useCallback } from 'react';
+import Swal from 'sweetalert2';
 import {
   GoogleMap,
   LoadScript,
   MarkerF,
   InfoWindowF,
   DirectionsRenderer,
-} from "@react-google-maps/api";
-import { Navigation2 } from "lucide-react";
+} from '@react-google-maps/api';
+import { Navigation2 } from 'lucide-react';
 
 const mapContainerStyle = {
-  width: "100%",
-  height: "400px",
-  borderRadius: "8px",
-  border: "2px solid #e0e0e0",
+  width: '100%',
+  height: '400px',
+  borderRadius: '8px',
+  border: '2px solid #e0e0e0',
 };
 
 export function MapView({ pets }) {
@@ -31,9 +31,9 @@ export function MapView({ pets }) {
     e.preventDefault();
     if (navigator.geolocation) {
       Swal.fire({
-        title: "Mengambil Lokasi Anda",
-        text: "Mohon tunggu sebentar...",
-        icon: "info",
+        title: 'Mengambil Lokasi Anda',
+        text: 'Mohon tunggu sebentar...',
+        icon: 'info',
         allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
@@ -49,7 +49,7 @@ export function MapView({ pets }) {
             };
 
             // Verifikasi lokasi yang diambil
-            console.log("Lokasi yang berhasil diambil:", newUserLocation);
+            console.log('Lokasi yang berhasil diambil:', newUserLocation);
             // Simpan lokasi pengguna dan pastikan state diupdate
             setUserLocation(newUserLocation);
             setLocationFetched(true);
@@ -60,29 +60,29 @@ export function MapView({ pets }) {
             }, 1000);
           },
           (error) => {
-            console.error("Error getting location:", error);
+            console.error('Error getting location:', error);
             Swal.close();
             Swal.fire({
-              icon: "error",
-              title: "Lokasi Tidak Ditemukan",
-              text: "Mohon aktifkan lokasi Anda terlebih dahulu.",
+              icon: 'error',
+              title: 'Lokasi Tidak Ditemukan',
+              text: 'Mohon aktifkan lokasi Anda terlebih dahulu.',
             });
           }
         );
       } catch (err) {
-        console.error("Error getting location:", err);
+        console.error('Error getting location:', err);
         Swal.close();
         Swal.fire({
-          icon: "error",
-          title: "Geolocation Tidak Didukung",
-          text: "Browser Anda tidak mendukung geolocation.",
+          icon: 'error',
+          title: 'Geolocation Tidak Didukung',
+          text: 'Browser Anda tidak mendukung geolocation.',
         });
       }
     } else {
       Swal.fire({
-        icon: "error",
-        title: "Geolocation Tidak Didukung",
-        text: "Browser Anda tidak mendukung geolocation.",
+        icon: 'error',
+        title: 'Geolocation Tidak Didukung',
+        text: 'Browser Anda tidak mendukung geolocation.',
       });
     }
   }, []);
@@ -92,9 +92,9 @@ export function MapView({ pets }) {
     async (pet) => {
       if (!userLocation) {
         Swal.fire({
-          icon: "warning",
-          title: "Aktifkan Lokasi",
-          text: "Mohon aktifkan lokasi Anda terlebih dahulu.",
+          icon: 'warning',
+          title: 'Aktifkan Lokasi',
+          text: 'Mohon aktifkan lokasi Anda terlebih dahulu.',
         });
         return;
       }
@@ -117,11 +117,11 @@ export function MapView({ pets }) {
         const distanceInKm = (distanceInMeters / 1000).toFixed(1);
         setDistance(distanceInKm);
       } catch (error) {
-        console.error("Error calculating route:", error);
+        console.error('Error calculating route:', error);
         Swal.fire({
-          icon: "error",
-          title: "Gagal Menghitung Rute",
-          text: "Terdapat kesalahan dalam menghitung rute.",
+          icon: 'error',
+          title: 'Gagal Menghitung Rute',
+          text: 'Terdapat kesalahan dalam menghitung rute.',
         });
       }
     },
@@ -129,11 +129,11 @@ export function MapView({ pets }) {
   );
 
   const customMarkerIcon = {
-    path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
-    fillColor: "#1e40af",
+    path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+    fillColor: '#1e40af',
     fillOpacity: 1,
     strokeWeight: 1,
-    strokeColor: "#ffffff",
+    strokeColor: '#ffffff',
     scale: 1.5,
   };
 
@@ -157,9 +157,9 @@ export function MapView({ pets }) {
           options={{
             styles: [
               {
-                featureType: "poi",
-                elementType: "labels",
-                stylers: [{ visibility: "off" }],
+                featureType: 'poi',
+                elementType: 'labels',
+                stylers: [{ visibility: 'off' }],
               },
             ],
           }}
@@ -171,10 +171,10 @@ export function MapView({ pets }) {
               icon={{
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 10,
-                fillColor: "#4CAF50",
+                fillColor: '#4CAF50',
                 fillOpacity: 1,
                 strokeWeight: 2,
-                strokeColor: "#ffffff",
+                strokeColor: '#ffffff',
               }}
             />
           )}
@@ -216,7 +216,7 @@ export function MapView({ pets }) {
               <div className="p-3 max-w-[250px]">
                 <div className="w-full relative mb-2">
                   <img
-                    src={selectedPet.image || "/placeholder.svg"}
+                    src={selectedPet.image || '/placeholder.svg'}
                     alt={selectedPet.name}
                     className="w-full h-full object-cover rounded-lg text-cmuda"
                   />

@@ -1,36 +1,36 @@
-"use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import DataImage from "@/assets/data";
-import Image from "next/image";
-import Link from "next/link";
-import Swal from "sweetalert2";
-import { Eye, EyeOff } from "lucide-react"; // Import ikon mata
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import DataImage from '@/assets/data';
+import Image from 'next/image';
+import Link from 'next/link';
+import Swal from 'sweetalert2';
+import { Eye, EyeOff } from 'lucide-react'; // Import ikon mata
 
 export default function RegisterForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    owner_phone: "",
-    role: "pengadopsi",
+    username: '',
+    email: '',
+    password: '',
+    owner_phone: '',
+    role: 'pengadopsi',
   });
   const [step, setStep] = useState(1); // Step 1: Register, Step 2: OTP Verification
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State untuk menyimpan status tampilan password
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     // Memastikan nomor telepon dimulai dengan "62" jika mulai dengan "0"
-    if (name === "owner_phone") {
-      let formattedPhone = value.replace(/\D/g, ""); // Menghapus karakter non-digit
+    if (name === 'owner_phone') {
+      let formattedPhone = value.replace(/\D/g, ''); // Menghapus karakter non-digit
 
-      if (formattedPhone.startsWith("0")) {
-        formattedPhone = "62" + formattedPhone.slice(1); // Mengganti "0" dengan "62"
-      } else if (!formattedPhone.startsWith("62")) {
-        formattedPhone = "62" + formattedPhone; // Menambahkan "62" jika tidak ada
+      if (formattedPhone.startsWith('0')) {
+        formattedPhone = '62' + formattedPhone.slice(1); // Mengganti "0" dengan "62"
+      } else if (!formattedPhone.startsWith('62')) {
+        formattedPhone = '62' + formattedPhone; // Menambahkan "62" jika tidak ada
       }
 
       setFormData({ ...formData, [name]: formattedPhone });
@@ -42,79 +42,79 @@ export default function RegisterForm() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/otp/send-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/otp/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email }),
       });
 
       if (response.ok) {
-        Swal.fire("OTP Terkirim!", "Silakan cek email Anda.", "success");
+        Swal.fire('OTP Terkirim!', 'Silakan cek email Anda.', 'success');
         setStep(2); // Pindah ke verifikasi OTP
       } else {
-        Swal.fire("Gagal", "Gagal mengirim OTP.", "error");
+        Swal.fire('Gagal', 'Gagal mengirim OTP.', 'error');
       }
     } catch (error) {
-      Swal.fire("Error", "Terjadi kesalahan pada server.", "error");
+      Swal.fire('Error', 'Terjadi kesalahan pada server.', 'error');
     }
   };
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/otp/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/otp/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email, otp }),
       });
 
       if (response.ok) {
         // OTP Valid, Simpan User ke Database
-        const registerResponse = await fetch("/api/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const registerResponse = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
         });
 
         if (registerResponse.ok) {
-          Swal.fire("Sukses", "Akun berhasil dibuat!", "success");
-          router.push("/login");
+          Swal.fire('Sukses', 'Akun berhasil dibuat!', 'success');
+          router.push('/login');
         } else {
-          Swal.fire("Gagal", "Gagal menyimpan data akun.", "error");
+          Swal.fire('Gagal', 'Gagal menyimpan data akun.', 'error');
         }
       } else {
         Swal.fire(
-          "OTP Salah",
-          "OTP yang Anda masukkan salah atau expired.",
-          "error"
+          'OTP Salah',
+          'OTP yang Anda masukkan salah atau expired.',
+          'error'
         );
       }
     } catch (error) {
-      Swal.fire("Error", "Terjadi kesalahan pada server.", "error");
+      Swal.fire('Error', 'Terjadi kesalahan pada server.', 'error');
     }
   };
 
   const handleResendOtp = async () => {
     try {
-      const response = await fetch("/api/otp/resend-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/otp/resend-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        Swal.fire("OTP Baru Terkirim", "Silakan cek email Anda.", "success");
+        Swal.fire('OTP Baru Terkirim', 'Silakan cek email Anda.', 'success');
       } else {
         Swal.fire(
-          "Gagal Mengirim OTP",
-          data.error || "Terjadi kesalahan.",
-          "error"
+          'Gagal Mengirim OTP',
+          data.error || 'Terjadi kesalahan.',
+          'error'
         );
       }
     } catch (error) {
-      Swal.fire("Error", "Terjadi kesalahan pada server.", "error");
+      Swal.fire('Error', 'Terjadi kesalahan pada server.', 'error');
     }
   };
 
@@ -126,7 +126,7 @@ export default function RegisterForm() {
           <div className="flex flex-col items-center mb-8">
             <div className="flex items-center">
               <Image
-                src={DataImage.kujing3 || "/placeholder.svg"}
+                src={DataImage.kujing3 || '/placeholder.svg'}
                 alt="Logo"
                 priority={true}
                 width={140}
@@ -164,7 +164,7 @@ export default function RegisterForm() {
               />
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"} // Mengubah type input password
+                  type={showPassword ? 'text' : 'password'} // Mengubah type input password
                   name="password"
                   placeholder="Password"
                   value={formData.password}
@@ -235,7 +235,7 @@ export default function RegisterForm() {
           )}
 
           <p className="mt-6 text-center text-cmuda">
-            Sudah punya akun?{" "}
+            Sudah punya akun?{' '}
             <Link
               href="/login"
               className="font-semibold text-secondary hover:text-[#4C8B5A] transition-colors duration-300"

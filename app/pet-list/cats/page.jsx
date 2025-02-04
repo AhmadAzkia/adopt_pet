@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useCatList } from "@/hooks/useCatList";
-import { CatCard } from "@/components/pet-list/cats/cat-card";
-import { CatFilters } from "@/components/pet-list/cats/cat-filters";
-import { MapView } from "@/components/pet-list/map-view";
-import { LoadingSkeleton } from "@/components/pet-list/loading-skeleton";
+import { useCatList } from '@/hooks/useCatList';
+import { CatCard } from '@/components/pet-list/cats/cat-card';
+import { CatFilters } from '@/components/pet-list/cats/cat-filters';
+import { MapView } from '@/components/pet-list/map-view';
+import { LoadingSkeleton } from '@/components/pet-list/loading-skeleton';
 
 // Fungsi untuk mengategorikan usia kucing
 const ageCategory = (age) => {
-  if (age <= 1) return "Anak"; // Usia 0-1 tahun
-  if (age >= 2 && age <= 5) return "Muda"; // Usia 2-5 tahun
-  if (age > 5) return "Dewasa"; // Usia lebih dari 5 tahun
-  return "Semua"; // Jika tidak ada usia yang terdefinisi
+  if (age <= 1) return 'Anak'; // Usia 0-1 tahun
+  if (age >= 2 && age <= 5) return 'Muda'; // Usia 2-5 tahun
+  if (age > 5) return 'Dewasa'; // Usia lebih dari 5 tahun
+  return 'Semua'; // Jika tidak ada usia yang terdefinisi
 };
 
 export default function CatList() {
@@ -24,11 +24,11 @@ export default function CatList() {
   // Filter cats based on selected filters
   const filteredCats = cats.filter((cat) => {
     const ageFilter =
-      filters.age === "Semua" ? true : ageCategory(cat.age) === filters.age;
+      filters.age === 'Semua' ? true : ageCategory(cat.age) === filters.age;
     return (
-      (filters.breed === "Semua" || cat.breed === filters.breed) &&
+      (filters.breed === 'Semua' || cat.breed === filters.breed) &&
       ageFilter &&
-      (filters.gender === "Semua" || cat.gender === filters.gender)
+      (filters.gender === 'Semua' || cat.gender === filters.gender)
     );
   });
 

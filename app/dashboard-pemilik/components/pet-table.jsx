@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 export function PetTable({ pets, onDelete, onStatusChange }) {
   // Move initial state to useEffect to avoid hydration mismatch
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [filter, setFilter] = useState({
-    status: "all",
-    type: "all",
+    status: 'all',
+    type: 'all',
   });
   const [mounted, setMounted] = useState(false);
 
@@ -21,11 +21,11 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
       pet.breed.toLowerCase().includes(search.toLowerCase());
 
     const matchesStatus =
-      filter.status === "all" ||
-      (filter.status === "adopted" && pet.adopted === 1) ||
-      (filter.status === "available" && pet.adopted === 0);
+      filter.status === 'all' ||
+      (filter.status === 'adopted' && pet.adopted === 1) ||
+      (filter.status === 'available' && pet.adopted === 0);
 
-    const matchesType = filter.type === "all" || filter.type === pet.type;
+    const matchesType = filter.type === 'all' || filter.type === pet.type;
 
     return matchesSearch && matchesStatus && matchesType;
   });
@@ -36,7 +36,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
   }
 
   const getPetTypeLabel = (type) => {
-    return type === "cat" ? "Kucing" : "Anjing";
+    return type === 'cat' ? 'Kucing' : 'Anjing';
   };
 
   return (
@@ -123,7 +123,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
               <tr key={pet.id} className="hover:bg-gray-50">
                 <td className="px-8 py-5 whitespace-nowrap">
                   <img
-                    src={pet.image || "/placeholder.svg"}
+                    src={pet.image || '/placeholder.svg'}
                     alt={pet.name}
                     className="w-16 h-16 object-cover rounded-lg border-2 border-gray-200"
                   />
@@ -148,11 +148,11 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
                   <span
                     className={`px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full ${
                       pet.adopted === 1
-                        ? "bg-red-100 text-red-800"
-                        : "bg-green-100 text-green-800"
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-green-100 text-green-800'
                     }`}
                   >
-                    {pet.adopted === 1 ? "Diadopsi" : "Tersedia"}
+                    {pet.adopted === 1 ? 'Diadopsi' : 'Tersedia'}
                   </span>
                 </td>
                 <td className="px-8 py-5 whitespace-nowrap">
@@ -161,7 +161,7 @@ export function PetTable({ pets, onDelete, onStatusChange }) {
                       onClick={() => onStatusChange(pet.id, pet.adopted)}
                       className="text-blue-600 hover:text-blue-900 font-medium"
                     >
-                      {pet.adopted === 1 ? "Tersedia Lagi" : "Ubah ke Diadopsi"}
+                      {pet.adopted === 1 ? 'Tersedia Lagi' : 'Ubah ke Diadopsi'}
                     </button>
                     <button
                       onClick={() => onDelete(pet.id)}

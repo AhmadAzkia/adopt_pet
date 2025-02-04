@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --font-poppins: "Poppins", sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 }
 
 body {

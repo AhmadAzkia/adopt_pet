@@ -1,43 +1,43 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
 // Daftar ras kucing yang bisa dipilih
 const catBreeds = [
-  "Persian",
-  "Siamese",
-  "Maine Coon",
-  "Bengal",
-  "Ragdoll",
-  "Abyssinian",
-  "British Shorthair",
-  "Scottish Fold",
-  "Sphynx",
-  "Russian Blue",
-  "Birman",
+  'Persian',
+  'Siamese',
+  'Maine Coon',
+  'Bengal',
+  'Ragdoll',
+  'Abyssinian',
+  'British Shorthair',
+  'Scottish Fold',
+  'Sphynx',
+  'Russian Blue',
+  'Birman',
 ];
 
 // Daftar ras anjing yang bisa dipilih
 const dogBreeds = [
-  "Bulldog",
-  "Beagle",
-  "Poodle",
-  "Labrador",
-  "Golden Retriever",
-  "German Shepherd",
-  "Rottweiler",
-  "Dachshund",
-  "Boxer",
-  "Chihuahua",
+  'Bulldog',
+  'Beagle',
+  'Poodle',
+  'Labrador',
+  'Golden Retriever',
+  'German Shepherd',
+  'Rottweiler',
+  'Dachshund',
+  'Boxer',
+  'Chihuahua',
 ];
 
 export function PetForm({ onSubmit, loading }) {
   const [imagePreview, setImagePreview] = useState(null);
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [petType, setPetType] = useState(""); // Untuk jenis hewan
-  const [breed, setBreed] = useState(""); // Untuk ras
-  const [location, setLocation] = useState(""); // Lokasi
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [petType, setPetType] = useState(''); // Untuk jenis hewan
+  const [breed, setBreed] = useState(''); // Untuk ras
+  const [location, setLocation] = useState(''); // Lokasi
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -60,13 +60,13 @@ export function PetForm({ onSubmit, loading }) {
         );
         const data = await response.json();
 
-        if (data.status === "OK" && data.results.length > 0) {
+        if (data.status === 'OK' && data.results.length > 0) {
           const { lat, lng } = data.results[0].geometry.location;
           setLatitude(lat.toString());
           setLongitude(lng.toString());
         }
       } catch (error) {
-        console.error("Error getting coordinates:", error);
+        console.error('Error getting coordinates:', error);
       }
     }
   };
@@ -129,15 +129,15 @@ export function PetForm({ onSubmit, loading }) {
               disabled={!petType} // Disable dropdown if no pet type selected
             >
               <option value="">
-                Pilih ras {petType === "cat" ? "kucing" : "anjing"}
+                Pilih ras {petType === 'cat' ? 'kucing' : 'anjing'}
               </option>
-              {petType === "cat" &&
+              {petType === 'cat' &&
                 catBreeds.map((breedOption, index) => (
                   <option key={index} value={breedOption}>
                     {breedOption}
                   </option>
                 ))}
-              {petType === "dog" &&
+              {petType === 'dog' &&
                 dogBreeds.map((breedOption, index) => (
                   <option key={index} value={breedOption}>
                     {breedOption}
@@ -195,7 +195,7 @@ export function PetForm({ onSubmit, loading }) {
             />
             {imagePreview && (
               <img
-                src={imagePreview || "/placeholder.svg"}
+                src={imagePreview || '/placeholder.svg'}
                 alt="Preview"
                 className="mt-2 w-full h-32 object-cover rounded-lg"
               />
@@ -217,7 +217,8 @@ export function PetForm({ onSubmit, loading }) {
               placeholder="Masukkan alamat lengkap"
               className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-secondary focus:ring-2 transition-all duration-300 bg-white/50 backdrop-blur-sm"
             />
-          </div><br />
+          </div>
+          <br />
           <div>
             <label
               htmlFor="latitude"
@@ -273,7 +274,7 @@ export function PetForm({ onSubmit, loading }) {
           disabled={loading}
           className="bg-primary text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-h1 transition-colors disabled:opacity-50"
         >
-          {loading ? "Memproses..." : "Buka Adopsi"}
+          {loading ? 'Memproses...' : 'Buka Adopsi'}
         </button>
       </form>
     </div>

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function CatDetail() {
   const [cat, setCat] = useState(null);
@@ -25,13 +25,13 @@ export default function CatDetail() {
       try {
         const response = await fetch(`/api/pets/cats/${id}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch cat details");
+          throw new Error('Failed to fetch cat details');
         }
         const data = await response.json();
         if (data.success) {
           setCat(data.cat);
         } else {
-          throw new Error(data.message || "Failed to fetch cat details");
+          throw new Error(data.message || 'Failed to fetch cat details');
         }
       } catch (err) {
         setError(err.message);
@@ -79,23 +79,16 @@ export default function CatDetail() {
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative aspect-video">
             <Image
-              src={cat.image || "/placeholder.svg"}
+              src={cat.image || '/placeholder.svg'}
               alt={cat.name}
-              width={50}
-              height={50}
-              className="object-cover"
+              fill
+              className="object-contain mx-auto mt-5"
               priority
             />
           </div>
           <div className="p-8">
             <div className="flex justify-between items-start mb-6">
               <h1 className="text-3xl font-bold text-gray-900">{cat.name}</h1>
-              <Link
-                href={`/chat/${cat.owner_id}`}
-                className="px-6 py-2 bg-[#1e40af] text-white rounded-lg hover:bg-[#1e3a8a] transition-colors"
-              >
-                Hubungi Pemilik
-              </Link>
             </div>
 
             <div className="grid grid-cols-2 gap-6 mb-8">
@@ -120,11 +113,21 @@ export default function CatDetail() {
                 <p className="text-gray-600">{cat.description}</p>
               </div>
             )}
-
             {/* Back Button */}
             <button
               onClick={handleBack}
-              className="mt-6 px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+              className="mt-6 px-6 py-2 bg-secondary text-white rounded-lg hover:bg-h2
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              transition-colors"
             >
               Kembali
             </button>

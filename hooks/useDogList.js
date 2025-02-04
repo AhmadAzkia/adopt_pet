@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 
 export function useDogList() {
   const [dogs, setDogs] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [filters, setFilters] = useState({
-    breed: "Semua",
-    age: "Semua",
-    gender: "Semua",
+    breed: 'Semua',
+    age: 'Semua',
+    gender: 'Semua',
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,13 +21,13 @@ export function useDogList() {
       });
       const response = await fetch(`/api/pets/dogs?${queryParams}`);
       if (!response.ok) {
-        throw new Error("Failed to fetch dogs");
+        throw new Error('Failed to fetch dogs');
       }
       const data = await response.json();
       if (data.success) {
         setDogs(data.dogs);
       } else {
-        throw new Error(data.message || "Failed to fetch dogs");
+        throw new Error(data.message || 'Failed to fetch dogs');
       }
     } catch (err) {
       setError(err.message);

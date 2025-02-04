@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export function useUserLocation() {
   const [userLocation, setUserLocation] = useState(null);
@@ -13,12 +13,12 @@ export function useUserLocation() {
           });
         },
         (error) => {
-          console.error("Error getting location:", error);
-          alert("Tidak dapat mengakses lokasi Anda. Pastikan izin diberikan.");
+          console.error('Error getting location:', error);
+          alert('Tidak dapat mengakses lokasi Anda. Pastikan izin diberikan.');
         }
       );
     } else {
-      alert("Geolocation tidak didukung oleh browser Anda.");
+      alert('Geolocation tidak didukung oleh browser Anda.');
     }
   };
 

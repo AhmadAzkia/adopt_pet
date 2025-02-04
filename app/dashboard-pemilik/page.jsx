@@ -1,27 +1,27 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { PetForm } from "./components/pet-form";
-import { PetTable } from "./components/pet-table";
-import Swal from "sweetalert2";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { PetForm } from './components/pet-form';
+import { PetTable } from './components/pet-table';
+import Swal from 'sweetalert2';
 
 export default function DashboardPemilik() {
   const router = useRouter();
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("list");
+  const [activeTab, setActiveTab] = useState('list');
 
   useEffect(() => {
-    const loggedInUserId = localStorage.getItem("owner_id");
+    const loggedInUserId = localStorage.getItem('owner_id');
 
     if (!loggedInUserId) {
       Swal.fire(
-        "Error!",
-        "Anda belum login. Silakan login terlebih dahulu.",
-        "error"
+        'Error!',
+        'Anda belum login. Silakan login terlebih dahulu.',
+        'error'
       );
-      router.push("/login");
+      router.push('/login');
       return;
     }
 
@@ -29,10 +29,10 @@ export default function DashboardPemilik() {
   }, [router]);
 
   const fetchPets = async () => {
-    const loggedInUserId = localStorage.getItem("owner_id");
+    const loggedInUserId = localStorage.getItem('owner_id');
 
     if (!loggedInUserId) {
-      console.warn("Owner ID tidak ditemukan, tidak mengambil data pets.");
+      console.warn('Owner ID tidak ditemukan, tidak mengambil data pets.');
       setPets([]);
       return;
     }
@@ -44,20 +44,20 @@ export default function DashboardPemilik() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Response bukan JSON");
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Response bukan JSON');
       }
 
       const data = await response.json();
       if (data.success) {
         setPets(data.pets);
       } else {
-        console.error("Gagal mendapatkan data pets:", data.message);
+        console.error('Gagal mendapatkan data pets:', data.message);
         setPets([]);
       }
     } catch (error) {
-      console.error("Error fetching pets:", error);
+      console.error('Error fetching pets:', error);
       setPets([]);
     }
   };
@@ -68,31 +68,31 @@ export default function DashboardPemilik() {
 
     try {
       const formData = new FormData(e.target);
-      const loggedInUserId = localStorage.getItem("owner_id");
+      const loggedInUserId = localStorage.getItem('owner_id');
 
       if (!loggedInUserId) {
-        throw new Error("User belum login");
+        throw new Error('User belum login');
       }
 
-      formData.append("owner_id", loggedInUserId);
+      formData.append('owner_id', loggedInUserId);
 
-      const response = await fetch("/api/pets", {
-        method: "POST",
+      const response = await fetch('/api/pets', {
+        method: 'POST',
         body: formData,
       });
 
       const data = await response.json();
 
       if (data.success) {
-        Swal.fire("Berhasil!", "Pet berhasil ditambahkan!", "success");
+        Swal.fire('Berhasil!', 'Pet berhasil ditambahkan!', 'success');
         e.target.reset();
         fetchPets();
-        setActiveTab("list");
+        setActiveTab('list');
       } else {
-        Swal.fire("Error!", data.message || "Gagal menambahkan pet.", "error");
+        Swal.fire('Error!', data.message || 'Gagal menambahkan pet.', 'error');
       }
     } catch (error) {
-      Swal.fire("Error!", "Terjadi kesalahan. Silakan coba lagi.", "error");
+      Swal.fire('Error!', 'Terjadi kesalahan. Silakan coba lagi.', 'error');
     } finally {
       setLoading(false);
     }
@@ -100,37 +100,37 @@ export default function DashboardPemilik() {
 
   const deletePet = async (petId) => {
     Swal.fire({
-      title: "Yakin ingin menghapus pet ini?",
-      text: "Data akan dihapus secara permanen!",
-      icon: "warning",
+      title: 'Yakin ingin menghapus pet ini?',
+      text: 'Data akan dihapus secara permanen!',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Ya, hapus!",
-      cancelButtonText: "Batal",
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, hapus!',
+      cancelButtonText: 'Batal',
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await fetch("/api/pets", {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
+          const response = await fetch('/api/pets', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ petId }),
           });
 
           const data = await response.json();
 
           if (data.success) {
-            Swal.fire("Dihapus!", "Pet telah dihapus.", "success");
+            Swal.fire('Dihapus!', 'Pet telah dihapus.', 'success');
             fetchPets();
           } else {
             Swal.fire(
-              "Error!",
-              data.message || "Gagal menghapus pet.",
-              "error"
+              'Error!',
+              data.message || 'Gagal menghapus pet.',
+              'error'
             );
           }
         } catch (error) {
-          Swal.fire("Error!", "Terjadi kesalahan saat menghapus pet.", "error");
+          Swal.fire('Error!', 'Terjadi kesalahan saat menghapus pet.', 'error');
         }
       }
     });
@@ -138,18 +138,18 @@ export default function DashboardPemilik() {
 
   const toggleAdoptionStatus = async (petId, currentStatus) => {
     try {
-      const owner_id = localStorage.getItem("owner_id");
+      const owner_id = localStorage.getItem('owner_id');
       if (!owner_id) {
-        throw new Error("User tidak terautentikasi");
+        throw new Error('User tidak terautentikasi');
       }
 
       // Log request details for debugging
-      console.log("Sending request:", {
+      console.log('Sending request:', {
         url: `/api/pets/${petId}`,
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
-          "owner-id": owner_id,
+          'Content-Type': 'application/json',
+          'owner-id': owner_id,
         },
         body: {
           adopted: currentStatus === 1 ? 0 : 1,
@@ -157,10 +157,10 @@ export default function DashboardPemilik() {
       });
 
       const response = await fetch(`/api/pets/${petId}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
-          "owner-id": owner_id,
+          'Content-Type': 'application/json',
+          'owner-id': owner_id,
         },
         body: JSON.stringify({
           adopted: currentStatus === 1 ? 0 : 1,
@@ -172,33 +172,33 @@ export default function DashboardPemilik() {
       try {
         data = await response.json();
       } catch (e) {
-        console.error("Error parsing JSON:", e);
-        throw new Error("Invalid JSON response from server");
+        console.error('Error parsing JSON:', e);
+        throw new Error('Invalid JSON response from server');
       }
 
       // Log parsed data for debugging
-      console.log("Response data:", data);
+      console.log('Response data:', data);
 
       if (!response.ok) {
-        throw new Error(data.message || "Gagal mengubah status");
+        throw new Error(data.message || 'Gagal mengubah status');
       }
 
       if (data.success) {
         await Swal.fire({
-          icon: "success",
-          title: "Berhasil!",
-          text: "Status adopsi berhasil diubah!",
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Status adopsi berhasil diubah!',
         });
         await fetchPets(); // Refresh data
       } else {
-        throw new Error(data.message || "Gagal mengubah status adopsi");
+        throw new Error(data.message || 'Gagal mengubah status adopsi');
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
       await Swal.fire({
-        icon: "error",
-        title: "Error!",
-        text: error.message || "Terjadi kesalahan. Silakan coba lagi.",
+        icon: 'error',
+        title: 'Error!',
+        text: error.message || 'Terjadi kesalahan. Silakan coba lagi.',
       });
     }
   };
@@ -212,21 +212,21 @@ export default function DashboardPemilik() {
           </h2>
           <div className="flex gap-4">
             <button
-              onClick={() => setActiveTab("list")}
+              onClick={() => setActiveTab('list')}
               className={`px-6 py-2.5 mt-1 md:mt-0 rounded-lg font-semibold text-base ${
-                activeTab === "list"
-                  ? "bg-[#1e40af] text-white"
-                  : "bg-white text-[#1e40af] border-2 border-[#1e40af]"
+                activeTab === 'list'
+                  ? 'bg-[#1e40af] text-white'
+                  : 'bg-white text-[#1e40af] border-2 border-[#1e40af]'
               }`}
             >
               Daftar Pet
             </button>
             <button
-              onClick={() => setActiveTab("add")}
+              onClick={() => setActiveTab('add')}
               className={`px-6 py-2.5 mt-1 md:mt-0 rounded-lg font-semibold text-base ${
-                activeTab === "add"
-                  ? "bg-[#1e40af] text-white"
-                  : "bg-white text-[#1e40af] border-2 border-[#1e40af]"
+                activeTab === 'add'
+                  ? 'bg-[#1e40af] text-white'
+                  : 'bg-white text-[#1e40af] border-2 border-[#1e40af]'
               }`}
             >
               Tambah Pet
@@ -234,7 +234,7 @@ export default function DashboardPemilik() {
           </div>
         </div>
 
-        {activeTab === "list" ? (
+        {activeTab === 'list' ? (
           <PetTable
             pets={pets}
             onDelete={deletePet}

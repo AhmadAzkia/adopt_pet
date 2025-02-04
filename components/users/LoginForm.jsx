@@ -1,18 +1,18 @@
-"use client";
-import React, { useState } from "react";
-import DataImage from "@/assets/data";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
-import { Eye, EyeOff } from "lucide-react"; // Import ikon mata
+'use client';
+import React, { useState } from 'react';
+import DataImage from '@/assets/data';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
+import { Eye, EyeOff } from 'lucide-react'; // Import ikon mata
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({
-    identifier: "",
-    password: "",
+    identifier: '',
+    password: '',
   });
-  const [errorMessage, setErrorMessage] = useState(""); // Pesan error untuk ditampilkan jika login gagal
+  const [errorMessage, setErrorMessage] = useState(''); // Pesan error untuk ditampilkan jika login gagal
   const [showPassword, setShowPassword] = useState(false); // State untuk menyimpan status tampilan password
   const router = useRouter();
 
@@ -24,75 +24,75 @@ export default function LoginForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
+      const response = await fetch('/api/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
         const { token } = await response.json();
-        localStorage.setItem("token", token); // Simpan token di localStorage
+        localStorage.setItem('token', token); // Simpan token di localStorage
 
         // Trigger event untuk update Navbar
-        window.dispatchEvent(new Event("storage"));
+        window.dispatchEvent(new Event('storage'));
 
         // Decode token JWT
-        const payload = JSON.parse(atob(token.split(".")[1]));
-        localStorage.setItem("owner_id", payload.id); // Simpan owner_id di LocalStorage
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        localStorage.setItem('owner_id', payload.id); // Simpan owner_id di LocalStorage
 
         // SweetAlert2 notification
         Swal.fire({
-          title: "Login Berhasil!",
+          title: 'Login Berhasil!',
           text: `Selamat datang, ${payload.username}`,
-          icon: "success",
-          confirmButtonText: "Lanjutkan",
+          icon: 'success',
+          confirmButtonText: 'Lanjutkan',
         }).then(() => {
-          if (payload.role === "pemilik") {
-            router.push("/dashboard-pemilik");
-          } else if (payload.role === "pengadopsi") {
-            router.push("/");
+          if (payload.role === 'pemilik') {
+            router.push('/dashboard-pemilik');
+          } else if (payload.role === 'pengadopsi') {
+            router.push('/');
           }
         });
       } else {
         const errorData = await response.json();
         Swal.fire(
-          "Login Gagal",
-          errorData.message || "Terjadi kesalahan.",
-          "error"
+          'Login Gagal',
+          errorData.message || 'Terjadi kesalahan.',
+          'error'
         );
       }
     } catch (error) {
       Swal.fire(
-        "Error",
-        "Terjadi kesalahan pada server. Silakan coba lagi.",
-        "error"
+        'Error',
+        'Terjadi kesalahan pada server. Silakan coba lagi.',
+        'error'
       );
     }
   };
 
   const handleForgotPassword = async () => {
     const { value: email } = await Swal.fire({
-      title: "Lupa Password?",
-      input: "email",
-      inputPlaceholder: "Masukkan email Anda...",
+      title: 'Lupa Password?',
+      input: 'email',
+      inputPlaceholder: 'Masukkan email Anda...',
       showCancelButton: true,
-      confirmButtonText: "Kirim OTP",
-      cancelButtonText: "Batal",
+      confirmButtonText: 'Kirim OTP',
+      cancelButtonText: 'Batal',
       inputValidator: (value) => {
         if (!value) {
-          return "Email tidak boleh kosong!";
+          return 'Email tidak boleh kosong!';
         }
       },
     });
 
     if (email) {
       try {
-        const response = await fetch("/api/auth/forgot-password", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const response = await fetch('/api/auth/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email }),
         });
 
@@ -100,30 +100,30 @@ export default function LoginForm() {
 
         if (response.ok) {
           Swal.fire(
-            "Cek Email Anda",
-            "OTP telah dikirim ke email Anda.",
-            "success"
+            'Cek Email Anda',
+            'OTP telah dikirim ke email Anda.',
+            'success'
           );
 
           // Setelah OTP dikirim, buka popup input OTP
           const { value: otp } = await Swal.fire({
-            title: "Masukkan OTP",
-            input: "text",
-            inputPlaceholder: "Masukkan OTP yang dikirim ke email...",
+            title: 'Masukkan OTP',
+            input: 'text',
+            inputPlaceholder: 'Masukkan OTP yang dikirim ke email...',
             showCancelButton: true,
-            confirmButtonText: "Verifikasi OTP",
-            cancelButtonText: "Batal",
+            confirmButtonText: 'Verifikasi OTP',
+            cancelButtonText: 'Batal',
             inputValidator: (value) => {
               if (!value) {
-                return "OTP tidak boleh kosong!";
+                return 'OTP tidak boleh kosong!';
               }
             },
           });
 
           if (otp) {
-            const otpResponse = await fetch("/api/otp/verify-otp", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
+            const otpResponse = await fetch('/api/otp/verify-otp', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email, otp }),
             });
 
@@ -131,30 +131,30 @@ export default function LoginForm() {
 
             if (otpResponse.ok) {
               Swal.fire(
-                "OTP Valid",
-                "Silakan masukkan password baru Anda.",
-                "success"
+                'OTP Valid',
+                'Silakan masukkan password baru Anda.',
+                'success'
               );
 
               // Setelah OTP valid, buka popup untuk masukkan password baru
               const { value: newPassword } = await Swal.fire({
-                title: "Reset Password",
-                input: "password",
-                inputPlaceholder: "Masukkan password baru...",
+                title: 'Reset Password',
+                input: 'password',
+                inputPlaceholder: 'Masukkan password baru...',
                 showCancelButton: true,
-                confirmButtonText: "Simpan Password",
-                cancelButtonText: "Batal",
+                confirmButtonText: 'Simpan Password',
+                cancelButtonText: 'Batal',
                 inputValidator: (value) => {
                   if (!value) {
-                    return "Password tidak boleh kosong!";
+                    return 'Password tidak boleh kosong!';
                   }
                 },
               });
 
               if (newPassword) {
-                const resetResponse = await fetch("/api/auth/reset-password", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
+                const resetResponse = await fetch('/api/auth/reset-password', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ email, password: newPassword }),
                 });
 
@@ -162,29 +162,29 @@ export default function LoginForm() {
 
                 if (resetResponse.ok) {
                   Swal.fire(
-                    "Sukses",
-                    "Password Anda telah diperbarui!",
-                    "success"
+                    'Sukses',
+                    'Password Anda telah diperbarui!',
+                    'success'
                   ).then(() => {
-                    router.push("/login"); // Arahkan ke halaman login setelah reset password
+                    router.push('/login'); // Arahkan ke halaman login setelah reset password
                   });
                 } else {
                   Swal.fire(
-                    "Gagal",
-                    resetData.error || "Terjadi kesalahan.",
-                    "error"
+                    'Gagal',
+                    resetData.error || 'Terjadi kesalahan.',
+                    'error'
                   );
                 }
               }
             } else {
-              Swal.fire("Gagal", otpData.error || "OTP tidak valid.", "error");
+              Swal.fire('Gagal', otpData.error || 'OTP tidak valid.', 'error');
             }
           }
         } else {
-          Swal.fire("Gagal", data.error || "Terjadi kesalahan.", "error");
+          Swal.fire('Gagal', data.error || 'Terjadi kesalahan.', 'error');
         }
       } catch (error) {
-        Swal.fire("Error", "Terjadi kesalahan pada server.", "error");
+        Swal.fire('Error', 'Terjadi kesalahan pada server.', 'error');
       }
     }
   };
@@ -195,7 +195,7 @@ export default function LoginForm() {
         <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-gray-300">
           <div className="flex flex-col items-center mb-8">
             <Image
-              src={DataImage.kujing3 || "/placeholder.svg"}
+              src={DataImage.kujing3 || '/placeholder.svg'}
               alt="Logo"
               priority={true}
               width={140}
@@ -237,7 +237,7 @@ export default function LoginForm() {
               ></label>
               <div className="relative">
                 <input
-                  type={showPassword ? "text" : "password"} // Mengubah type input password
+                  type={showPassword ? 'text' : 'password'} // Mengubah type input password
                   id="password"
                   name="password"
                   autoComplete="current-password"
@@ -278,7 +278,7 @@ export default function LoginForm() {
           </p>
 
           <p className="mt-6 text-center text-cmuda">
-            Belum punya akun?{" "}
+            Belum punya akun?{' '}
             <Link
               href="/register"
               className="font-semibold text-secondary hover:text-[#4C8B5A] transition-colors duration-300"

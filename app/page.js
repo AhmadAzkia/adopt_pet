@@ -1,43 +1,43 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import Image from "next/image";
-import Link from "next/link";
-import DataImage from "@/assets/data";
-import { Heart, MapPin, DoorOpen, PawPrintIcon as Paw } from "lucide-react";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import Image from 'next/image';
+import Link from 'next/link';
+import DataImage from '@/assets/data';
+import { Heart, MapPin, DoorOpen, PawPrintIcon as Paw } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [role, setRole] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       try {
-        const payload = JSON.parse(atob(token.split(".")[1]));
+        const payload = JSON.parse(atob(token.split('.')[1]));
         setRole(payload.role); // Set role dari payload token
         // Jika role adalah pemilik, arahkan ke Dashboard Pemilik
-        if (payload.role === "pemilik") {
-          router.push("/dashboard-pemilik"); // Arahkan pemilik ke dashboard
+        if (payload.role === 'pemilik') {
+          router.push('/dashboard-pemilik'); // Arahkan pemilik ke dashboard
         }
       } catch (error) {
-        console.error("Error decoding token:", error);
+        console.error('Error decoding token:', error);
       }
     }
   }, [router]);
 
   const handleOpenAdopsiClick = () => {
     Swal.fire({
-      title: "Akses Terbatas",
-      text: "Anda harus login terlebih dahulu sebagai pemilik untuk mengakses halaman Open Adopsi.",
-      icon: "warning",
+      title: 'Akses Terbatas',
+      text: 'Anda harus login terlebih dahulu sebagai pemilik untuk mengakses halaman Open Adopsi.',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: "Login",
-      cancelButtonText: "Batal",
+      confirmButtonText: 'Login',
+      cancelButtonText: 'Batal',
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/login";
+        window.location.href = '/login';
       }
     });
   };
@@ -62,7 +62,7 @@ export default function Home() {
               </h1>
               <p className="text-cmuda text-lg leading-relaxed">
                 <span className="leading-relaxed text-secondary">
-                  Adopt Pet App{" "}
+                  Adopt Pet App{' '}
                 </span>
                 adalah sebuah Aplikasi berbasis Website yang menyediakan layanan
                 untuk mempermudah seseorang untuk mencari informasi tentang
@@ -112,35 +112,35 @@ export default function Home() {
             {[
               {
                 icon: <Heart className="w-12 h-12" />,
-                title: "Adopsi Pet",
+                title: 'Adopsi Pet',
                 description:
-                  "Menyediakan layanan untuk menyediakan informasi pet yang dapat diadopsi bagi yang bersedia.",
+                  'Menyediakan layanan untuk menyediakan informasi pet yang dapat diadopsi bagi yang bersedia.',
               },
               {
                 icon: <MapPin className="w-12 h-12" />,
-                title: "Lacak Pet",
+                title: 'Lacak Pet',
                 description:
-                  "Menyediakan layanan untuk menampilkan informasi adopsi pet yang tersedia didalam Google Maps.",
+                  'Menyediakan layanan untuk menampilkan informasi adopsi pet yang tersedia didalam Google Maps.',
                 highlighted: true,
               },
               {
                 icon: <DoorOpen className="w-12 h-12" />,
-                title: "Open Adopsi",
+                title: 'Open Adopsi',
                 description:
-                  "Selain adopsi pet kami juga menyediakan layanan Buka Adopsi bagi seseorang yang ingin hewan peliharaannya diadopsi.",
+                  'Selain adopsi pet kami juga menyediakan layanan Buka Adopsi bagi seseorang yang ingin hewan peliharaannya diadopsi.',
               },
             ].map((service) => (
               <div
                 key={service.title}
                 className={`p-8 rounded-2xl backdrop-blur-sm ${
                   service.highlighted
-                    ? "bg-primary text-white"
-                    : "bg-white/90 text-cmuda"
+                    ? 'bg-primary text-white'
+                    : 'bg-white/90 text-cmuda'
                 } shadow-xl hover:transform hover:scale-105 transition-all duration-300 border border-blue-100`}
               >
                 <div
                   className={`${
-                    service.highlighted ? "text-white" : "text-primary"
+                    service.highlighted ? 'text-white' : 'text-primary'
                   } mb-6`}
                 >
                   {service.icon}
@@ -148,7 +148,7 @@ export default function Home() {
                 <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                 <p
                   className={
-                    service.highlighted ? "text-white/90" : "text-cmuda"
+                    service.highlighted ? 'text-white/90' : 'text-cmuda'
                   }
                 >
                   {service.description}
@@ -174,13 +174,13 @@ export default function Home() {
             {[
               {
                 image: DataImage.Cat,
-                name: "Kucing",
-                href: "/pet-list/cats",
+                name: 'Kucing',
+                href: '/pet-list/cats',
               },
               {
                 image: DataImage.Dog,
-                name: "Anjing",
-                href: "/pet-list/dogs",
+                name: 'Anjing',
+                href: '/pet-list/dogs',
               },
             ].map((pet) => (
               <div
@@ -195,7 +195,7 @@ export default function Home() {
                     fill
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{ objectFit: "contain" }}
+                    style={{ objectFit: 'contain' }}
                     className="transform hover:scale-110 transition-transform duration-300 relative z-10"
                   />
                 </div>

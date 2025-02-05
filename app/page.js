@@ -7,6 +7,8 @@ import DataImage from '@/assets/data';
 import { Heart, MapPin, DoorOpen, PawPrintIcon as Paw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import Head from 'next/head';
+
 export default function Home() {
   const [role, setRole] = useState(null);
   const router = useRouter();

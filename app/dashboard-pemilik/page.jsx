@@ -143,26 +143,13 @@ export default function DashboardPemilik() {
         throw new Error('User tidak terautentikasi');
       }
 
-      // Log request details for debugging
-      console.log('Sending request:', {
-        url: `/api/pets/${petId}`,
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'owner-id': owner_id,
-        },
-        body: {
-          adopted: currentStatus === 1 ? 0 : 1,
-        },
-      });
-
       const response = await fetch(`/api/pets/${petId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'owner-id': owner_id,
         },
         body: JSON.stringify({
+          owner_id: owner_id,
           adopted: currentStatus === 1 ? 0 : 1,
         }),
       });

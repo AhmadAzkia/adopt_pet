@@ -6,12 +6,24 @@ export async function PUT(req, { params }) {
     const petId = (await params).petId;
     console.log('PUT request received for pet ID:', petId);
 
-    const { adopted } = await req.json();
-    const ownerId = req.headers.get('owner-id');
+    const { adopted, owner_id } = await req.json();
 
-    if (!petId || adopted === undefined || !ownerId) {
+    console.log('PET ID = ', petId);
+    console.log('ADOPTED = ', adopted);
+    console.log('OWNER ID = ', owner_id);
+
+    if (!petId || adopted === undefined || !owner_id) {
+      const errors = [];
+      if (!petId) errors.push('Pet ID is required');
+      if (adopted === undefined) errors.push('Adopted status is required');
+      if (!owner_id) errors.push('Owner ID is required');
+
       return NextResponse.json(
-        { success: false, message: 'Invalid request data' },
+        {
+          success: false,
+          message: 'Invalid request data',
+          errors: errors,
+        },
         { status: 400 }
       );
     }
@@ -32,7 +44,7 @@ export async function PUT(req, { params }) {
         );
       }
 
-      if (pets[0].owner_id !== Number.parseInt(ownerId)) {
+      if (pets[0].owner_id !== Number.parseInt(owner_id)) {
         return NextResponse.json(
           { success: false, message: 'Unauthorized' },
           { status: 401 }
@@ -48,7 +60,7 @@ export async function PUT(req, { params }) {
       // Log the adoption status change
       await connection.execute(
         'INSERT INTO adopt_log (pet_id, owner_id, status_before, status_after) VALUES (?, ?, ?, ?)',
-        [petId, ownerId, !adopted ? 1 : 0, adopted ? 1 : 0]
+        [petId, owner_id, !adopted ? 1 : 0, adopted ? 1 : 0]
       );
 
       return NextResponse.json({
